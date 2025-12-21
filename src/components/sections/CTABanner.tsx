@@ -22,14 +22,13 @@ export default function CTABanner() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
-              variant="outline"
+              variant="hero-outline"
               size="xl"
               asChild
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
             >
-              <a href="tel:6025552665" className="flex items-center gap-2">
+              <a href="tel:6026092300" className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
-                Call (602) 555-2665
+                Call (602) 609-2300
               </a>
             </Button>
             <Button

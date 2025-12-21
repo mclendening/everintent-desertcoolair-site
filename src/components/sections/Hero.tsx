@@ -60,9 +60,9 @@ export default function Hero() {
               <Link to="/contact">Schedule Your Free Estimate</Link>
             </Button>
             <Button variant="hero-outline" size="xl" asChild>
-              <a href="tel:6025552665" className="flex items-center gap-2">
+              <a href="tel:6026092300" className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
-                (602) 555-2665
+                (602) 609-2300
               </a>
             </Button>
           </div>
