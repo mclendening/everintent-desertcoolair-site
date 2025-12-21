@@ -37,6 +37,10 @@ export default async function handler(request: Request) {
       throw new Error('Webhook not configured');
     }
 
+    // Get location and widget IDs from environment (set in Vercel dashboard)
+    const locationId = process.env.GHL_LOCATION_ID || '';
+    const widgetId = process.env.GHL_WIDGET_ID || '';
+
     // Submit to GoHighLevel webhook
     const webhookResponse = await fetch(webhookUrl, {
       method: 'POST',
@@ -55,8 +59,8 @@ export default async function handler(request: Request) {
         tcpaConsent: body.tcpaConsent,
         consentTimestamp: new Date().toISOString(),
         source: 'Desert Cool Air Website',
-        locationId: body.locationId || '',
-        widgetId: body.widgetId || '',
+        locationId,
+        widgetId,
       }),
     });
 

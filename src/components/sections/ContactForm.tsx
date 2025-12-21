@@ -45,10 +45,6 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Access env vars - DO NOT hardcode these values
-  const locationId = import.meta.env.VITE_GHL_LOCATION_ID;
-  const widgetId = import.meta.env.VITE_GHL_WIDGET_ID;
-
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,8 +67,6 @@ export default function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          locationId,
-          widgetId,
           firstName: data.firstName,
           lastName: data.lastName,
           phone: data.phone,
