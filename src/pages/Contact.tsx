@@ -1,17 +1,17 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 import ContactForm from "@/components/sections/ContactForm";
 
 export default function Contact() {
   return (
     <>
-      <Helmet>
+      <Head>
         <title>Contact Desert Cool Air | Free HVAC Estimate Phoenix</title>
         <meta
           name="description"
           content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix. Call (602) 609-2300 or fill out our form."
         />
         <link rel="canonical" href="https://desertcoolair.com/contact" />
-      </Helmet>
+      </Head>
 
       {/* Hero Section */}
       <section 

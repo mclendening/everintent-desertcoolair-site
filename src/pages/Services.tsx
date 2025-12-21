@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -120,14 +120,14 @@ const services = [
 export default function Services() {
   return (
     <>
-      <Helmet>
+      <Head>
         <title>HVAC Services in Phoenix | AC Repair, Installation, Heating | Desert Cool Air</title>
         <meta
           name="description"
           content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance, and indoor air quality. Licensed and insured."
         />
         <link rel="canonical" href="https://desertcoolair.com/services" />
-      </Helmet>
+      </Head>
 
       {/* Hero Section */}
       <section 

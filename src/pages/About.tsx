@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, Target, Heart, Users, Award, CheckCircle } from "lucide-react";
@@ -53,14 +53,14 @@ const serviceAreas = [
 export default function About() {
   return (
     <>
-      <Helmet>
+      <Head>
         <title>About Desert Cool Air | Phoenix HVAC Company Since 2010</title>
         <meta
           name="description"
           content="Family-owned Phoenix HVAC company serving the Valley since 2010. NATE certified technicians, BBB accredited, ROC licensed. Meet our team."
         />
         <link rel="canonical" href="https://desertcoolair.com/about" />
-      </Helmet>
+      </Head>
 
       {/* Hero Section */}
       <section 
