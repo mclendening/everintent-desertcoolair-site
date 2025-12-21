@@ -24,7 +24,7 @@ export default function Contact() {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/80 to-brand-navy/60" />
         <div className="container relative z-10">
-          <div className="max-w-2xl pt-8 md:pt-0">
+          <div className="max-w-2xl pt-12 md:pt-0">
             <span className="text-accent font-semibold text-sm uppercase tracking-wider">
               Contact Us
             </span>
