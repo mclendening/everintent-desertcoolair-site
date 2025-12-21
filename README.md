@@ -289,7 +289,6 @@ This creates a liability shield — EverIntent captures leads, partners perform 
 
 **Portfolio:**
 - [EverIntent.com](https://everintent.com) — AI & Automation Consultancy
-- [TheAIMultiplier.com](https://theaimultiplier.com) — Daily AI Implementation Guides
 - LocalPros Network — 20 lead generation portfolio sites
 
 ---
@@ -305,7 +304,7 @@ This project is proprietary to EverIntent LLC. The codebase demonstrates archite
 ## 🤝 Connect
 
 - **Website:** [everintent.com](https://everintent.com)
-- **LinkedIn:** [linkedin.com/in/michaelclendening](https://linkedin.com/in/michaelclendening)
+- **LinkedIn:** [linkedin.com/in/michaelclendening](https://linkedin.com/in/clendening)
 - **Email:** michael@everintent.com
 
 ---
