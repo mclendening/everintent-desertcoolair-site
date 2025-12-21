@@ -14,9 +14,17 @@ export default function Contact() {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="bg-gradient-hero py-16">
-        <div className="container">
-          <div className="max-w-2xl">
+      <section 
+        className="relative h-80 flex items-center overflow-hidden"
+        style={{
+          backgroundImage: `url('/images/hero-contact.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/80 to-brand-navy/60" />
+        <div className="container relative z-10">
+          <div className="max-w-2xl pt-8 md:pt-0">
             <span className="text-accent font-semibold text-sm uppercase tracking-wider">
               Contact Us
             </span>
