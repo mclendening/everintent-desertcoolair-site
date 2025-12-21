@@ -10,6 +10,7 @@ import {
   Wind,
   Check,
   Phone,
+  AlertTriangle,
 } from "lucide-react";
 import CTABanner from "@/components/sections/CTABanner";
 
@@ -198,9 +199,31 @@ export default function Services() {
                       </ul>
                     </div>
                     
-                    <Button variant="accent" size="lg" asChild>
-                      <Link to="/contact">{service.cta}</Link>
-                    </Button>
+                    {/* Emergency Call Banner - only for emergency service */}
+                    {service.id === "emergency" ? (
+                      <a
+                        href="tel:6026092300"
+                        className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-accent/10 border border-accent/20 hover:bg-accent/15 transition-colors"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                            <AlertTriangle className="h-5 w-5 text-accent" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground">AC Emergency?</p>
+                            <p className="text-sm text-accent">We answer 24/7 — don't wait!</p>
+                          </div>
+                        </div>
+                        <Button variant="accent" size="lg" className="w-full sm:w-auto">
+                          <Phone className="h-4 w-4" />
+                          Call Now: (602) 609-2300
+                        </Button>
+                      </a>
+                    ) : (
+                      <Button variant="accent" size="lg" asChild>
+                        <Link to="/contact">{service.cta}</Link>
+                      </Button>
+                    )}
                   </div>
                   
                   {/* Image */}
