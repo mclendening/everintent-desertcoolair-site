@@ -3,7 +3,7 @@
 **Author:** Michael Clendening  
 **Company:** [EverIntent LLC](https://everintent.com)  
 **Role:** Solution Architect & Lead Developer  
-**Contact:** michael@everintent.com | [LinkedIn](https://linkedin.com/in/michaelclendening)
+**Contact:** michael@everintent.com | [LinkedIn](https://linkedin.com/in/clendening)
 
 ---
 
