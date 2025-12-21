@@ -4,7 +4,8 @@
 **Company:** [EverIntent LLC](https://everintent.com)  
 **Role:** Solution Architect & Lead Developer
 **Contact:** michael@everintent.com | [LinkedIn](https://linkedin.com/in/clendening)
-**Live Site:** [Desert Cool Air](https://desertcoolair.com)  
+
+**Live Site:** https://desertcoolair.com/
 ---
 
 ## 🏜️ Project Overview
