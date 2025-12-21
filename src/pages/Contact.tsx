@@ -24,8 +24,8 @@ export default function Contact() {
               Let's Talk About Your HVAC Needs
             </h1>
             <p className="text-primary-foreground/80 text-lg">
-              Ready for a free estimate? Have questions? Our team is here to help. 
-              Fill out the form below or give us a call.
+              Get your free estimate or schedule service today. Our team is here to help 
+              with all your heating and cooling needs.
             </p>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default function Contact() {
       <section className="py-16 bg-secondary">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-2xl font-heading font-bold text-foreground mb-4">
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-4">
               Service Area
             </h2>
             <p className="text-muted-foreground">

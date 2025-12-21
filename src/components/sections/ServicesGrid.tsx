@@ -1,50 +1,50 @@
 import { Link } from "react-router-dom";
-import { Snowflake, Flame, Wrench, Settings, Wind, ThermometerSun } from "lucide-react";
+import { Wrench, PlusCircle, Flame, ShieldCheck, Clock, Wind } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const services = [
   {
-    icon: Snowflake,
+    icon: Wrench,
     title: "AC Repair",
-    description: "Fast, reliable AC repair for all makes and models. Same-day service available.",
+    description: "Fast diagnosis and repair for all AC brands. Most repairs completed same-day.",
     link: "/services#repair",
   },
   {
-    icon: Settings,
+    icon: PlusCircle,
     title: "AC Installation",
-    description: "Expert installation of high-efficiency cooling systems with warranty protection.",
+    description: "Energy-efficient systems professionally installed. Free in-home estimates.",
     link: "/services#installation",
-  },
-  {
-    icon: Wrench,
-    title: "Maintenance",
-    description: "Preventive maintenance plans to keep your system running at peak efficiency.",
-    link: "/services#maintenance",
   },
   {
     icon: Flame,
     title: "Heating Services",
-    description: "Complete heating solutions for those cool Arizona nights.",
+    description: "Furnace repair, heat pump service, and heating system installation.",
     link: "/services#heating",
   },
   {
-    icon: Wind,
-    title: "Air Quality",
-    description: "Improve your indoor air quality with advanced filtration and purification.",
-    link: "/services#air-quality",
+    icon: ShieldCheck,
+    title: "Maintenance Plans",
+    description: "Preventive maintenance to extend equipment life and prevent breakdowns.",
+    link: "/services#maintenance",
   },
   {
-    icon: ThermometerSun,
-    title: "Smart Thermostats",
-    description: "Save energy and enhance comfort with smart thermostat installation.",
-    link: "/services#thermostats",
+    icon: Clock,
+    title: "Emergency Service",
+    description: "24/7 emergency repairs. We're here when you need us most.",
+    link: "/services#emergency",
+  },
+  {
+    icon: Wind,
+    title: "Indoor Air Quality",
+    description: "Air purifiers, filtration systems, and duct cleaning for healthier air.",
+    link: "/services#air-quality",
   },
 ];
 
 export default function ServicesGrid() {
   return (
-    <section className="py-20 bg-secondary">
+    <section className="py-20 lg:py-24 bg-secondary">
       <div className="container">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
@@ -60,12 +60,12 @@ export default function ServicesGrid() {
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Services Grid - 3x2 desktop, 2x3 tablet, 1x6 mobile */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service) => (
             <Card
               key={service.title}
-              className="group bg-card hover:shadow-elevated transition-all duration-300 border-border/50 hover:border-primary/30"
+              className="group bg-card hover:shadow-elevated transition-all duration-300 border-border/50 hover:border-primary/30 hover:-translate-y-1"
             >
               <CardHeader>
                 <div className="w-14 h-14 rounded-xl bg-gradient-hero flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -79,10 +79,10 @@ export default function ServicesGrid() {
                 <p className="text-muted-foreground mb-4">{service.description}</p>
                 <Link
                   to={service.link}
-                  className="text-primary font-medium text-sm hover:text-accent transition-colors inline-flex items-center gap-1 group"
+                  className="text-primary font-medium text-sm hover:text-accent transition-colors inline-flex items-center gap-1 group/link"
                 >
                   Learn More
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="group-hover/link:translate-x-1 transition-transform">→</span>
                 </Link>
               </CardContent>
             </Card>

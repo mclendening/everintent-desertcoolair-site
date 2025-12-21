@@ -4,16 +4,15 @@ import ServicesGrid from "@/components/sections/ServicesGrid";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import Testimonials from "@/components/sections/Testimonials";
 import CTABanner from "@/components/sections/CTABanner";
-import ContactForm from "@/components/sections/ContactForm";
 
 export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Desert Cool Air | Phoenix's Trusted HVAC Experts</title>
+        <title>Phoenix HVAC Services | AC Repair & Installation | Desert Cool Air</title>
         <meta
           name="description"
-          content="Phoenix's most trusted HVAC company. Expert AC repair, installation, and maintenance with 24/7 emergency service. Free estimates. Call (602) 555-2665."
+          content="Phoenix's trusted HVAC experts. 24/7 emergency AC repair, installation, and maintenance. Same-day service. Free estimates. Call (602) 555-2665."
         />
         <meta
           name="keywords"
@@ -27,7 +26,6 @@ export default function Home() {
       <WhyChooseUs />
       <Testimonials />
       <CTABanner />
-      <ContactForm />
     </>
   );
 }
