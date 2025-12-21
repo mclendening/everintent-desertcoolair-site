@@ -16,18 +16,18 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-transparent backdrop-blur-sm">
+    <header className="absolute top-0 left-0 right-0 z-50 w-full">
       <div className="container flex h-20 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-hero">
-            <Snowflake className="h-6 w-6 text-primary-foreground" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm border border-white/30">
+            <Snowflake className="h-6 w-6 text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="font-heading text-lg font-bold text-brand-navy leading-tight">
+            <span className="font-heading text-lg font-bold text-white leading-tight drop-shadow-md">
               Desert Cool Air
             </span>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-white/70">
               HVAC Experts
             </span>
           </div>
@@ -39,10 +39,10 @@ export default function Header() {
             <Link
               key={link.path}
               to={link.path}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
+              className={`text-sm font-medium transition-colors hover:text-accent drop-shadow-sm ${
                 location.pathname === link.path
-                  ? "text-primary"
-                  : "text-muted-foreground"
+                  ? "text-accent"
+                  : "text-white/90"
               }`}
             >
               {link.name}
@@ -54,7 +54,7 @@ export default function Header() {
         <div className="hidden md:flex items-center gap-4">
           <a
             href="tel:6025552665"
-            className="flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-primary transition-colors"
+            className="flex items-center gap-2 text-sm font-semibold text-white hover:text-accent transition-colors drop-shadow-sm"
           >
             <Phone className="h-4 w-4" />
             (602) 555-2665
