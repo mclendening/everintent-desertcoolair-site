@@ -220,31 +220,7 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Emergency CTA */}
-      <section className="py-12 bg-accent">
-        <div className="container">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-2">
-                Need Emergency Service?
-              </h2>
-              <p className="text-white/80">
-                Our technicians are standing by 24/7 to help you.
-              </p>
-            </div>
-            <Button 
-              size="xl" 
-              className="bg-white text-accent hover:bg-white/90 font-bold"
-              asChild
-            >
-              <a href="tel:6026092300" className="flex items-center gap-2">
-                <Phone className="h-5 w-5" />
-                Call (602) 609-2300 Now
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <CTABanner />
     </>
   );
 }
