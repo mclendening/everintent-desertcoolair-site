@@ -29,7 +29,7 @@ const services = [
       "Drainage issues",
     ],
     cta: "Schedule AC Repair",
-    image: "/images/technician-working.jpg",
+    image: "/images/service-ac-repair.jpg",
   },
   {
     id: "installation",
@@ -45,7 +45,7 @@ const services = [
       "Proper sizing for maximum efficiency",
     ],
     cta: "Get Installation Quote",
-    image: "/images/comfortable-home.jpg",
+    image: "/images/service-ac-installation.jpg",
   },
   {
     id: "heating",
@@ -61,7 +61,7 @@ const services = [
       "Ductwork inspection",
     ],
     cta: "Schedule Heating Service",
-    image: "/images/comfortable-home.jpg",
+    image: "/images/service-heating.jpg",
   },
   {
     id: "maintenance",
@@ -80,7 +80,7 @@ const services = [
       "15% discount on repairs",
     ],
     cta: "Join Maintenance Plan",
-    image: "/images/technician-working.jpg",
+    image: "/images/service-maintenance.jpg",
   },
   {
     id: "emergency",
@@ -96,7 +96,7 @@ const services = [
       "Certified technicians",
     ],
     cta: "Call Emergency Line",
-    image: "/images/technician-working.jpg",
+    image: "/images/service-emergency.jpg",
   },
   {
     id: "air-quality",
@@ -112,7 +112,7 @@ const services = [
       "Air quality testing",
     ],
     cta: "Improve Your Air Quality",
-    image: "/images/comfortable-home.jpg",
+    image: "/images/service-air-quality.jpg",
   },
 ];
 
