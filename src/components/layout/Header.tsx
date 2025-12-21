@@ -68,11 +68,11 @@ export default function Header() {
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="tel:6025552665"
+            href="tel:6026092300"
             className="flex items-center gap-2 text-sm font-semibold text-white hover:text-accent transition-colors drop-shadow-sm"
           >
             <Phone className="h-4 w-4" />
-            (602) 555-2665
+            (602) 609-2300
           </a>
           <Button variant="accent" asChild>
             <Link to="/contact">Get Free Estimate</Link>
@@ -117,11 +117,11 @@ export default function Header() {
 
               <div className="flex flex-col gap-4 mt-4 pt-4 border-t">
                 <a
-                  href="tel:6025552665"
+                  href="tel:6026092300"
                   className="flex items-center gap-2 text-lg font-semibold text-brand-navy"
                 >
                   <Phone className="h-5 w-5" />
-                  (602) 555-2665
+                  (602) 609-2300
                 </a>
                 <SheetClose asChild>
                   <Button variant="accent" size="lg" asChild>
