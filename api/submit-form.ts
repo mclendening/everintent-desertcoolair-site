@@ -1,5 +1,5 @@
-// Vercel Edge Function for GoHighLevel integration
-// Note: This file will be deployed to Vercel, not run in Lovable's preview
+// Vercel Edge Function for GoHighLevel webhook integration
+// Environment variable: GHL_FORM_WEBHOOK (set in Vercel dashboard, NOT in code)
 
 export const config = {
   runtime: 'edge',
@@ -21,11 +21,26 @@ export default async function handler(request: Request) {
       });
     }
 
-    // Submit to GoHighLevel
-    const ghlResponse = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+    // Validate TCPA consent
+    if (!body.tcpaConsent) {
+      return new Response(JSON.stringify({ error: 'TCPA consent required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Get webhook URL from environment variable (set in Vercel dashboard)
+    const webhookUrl = process.env.GHL_FORM_WEBHOOK;
+    
+    if (!webhookUrl) {
+      console.error('GHL_FORM_WEBHOOK environment variable not configured');
+      throw new Error('Webhook not configured');
+    }
+
+    // Submit to GoHighLevel webhook
+    const webhookResponse = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.GHL_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -33,23 +48,22 @@ export default async function handler(request: Request) {
         lastName: body.lastName,
         phone: body.phone,
         email: body.email,
-        address1: body.address,
-        customField: {
-          service_needed: body.serviceNeeded,
-          preferred_contact: body.preferredContact,
-          message: body.message,
-          tcpa_consent: body.tcpaConsent,
-          consent_timestamp: new Date().toISOString(),
-        },
+        address: body.address || '',
+        serviceNeeded: body.serviceNeeded,
+        preferredContact: body.preferredContact,
+        message: body.message || '',
+        tcpaConsent: body.tcpaConsent,
+        consentTimestamp: new Date().toISOString(),
         source: 'Desert Cool Air Website',
-        tags: ['website-lead', 'hvac', 'phoenix'],
+        locationId: body.locationId || '',
+        widgetId: body.widgetId || '',
       }),
     });
 
-    if (!ghlResponse.ok) {
-      const errorText = await ghlResponse.text();
-      console.error('GHL API error:', errorText);
-      throw new Error('GHL API error');
+    if (!webhookResponse.ok) {
+      const errorText = await webhookResponse.text();
+      console.error('GHL webhook error:', errorText);
+      throw new Error('Webhook submission failed');
     }
 
     return new Response(JSON.stringify({ success: true }), {
