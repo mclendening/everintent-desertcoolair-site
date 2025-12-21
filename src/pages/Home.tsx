@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 import Hero from "@/components/sections/Hero";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
@@ -8,7 +8,7 @@ import CTABanner from "@/components/sections/CTABanner";
 export default function Home() {
   return (
     <>
-      <Helmet>
+      <Head>
         <title>Phoenix HVAC Services | AC Repair & Installation | Desert Cool Air</title>
         <meta
           name="description"
@@ -19,7 +19,7 @@ export default function Home() {
           content="HVAC Phoenix, AC repair Phoenix, air conditioning Phoenix, heating cooling Arizona, Desert Cool Air"
         />
         <link rel="canonical" href="https://desertcoolair.com" />
-      </Helmet>
+      </Head>
 
       <Hero />
       <ServicesGrid />

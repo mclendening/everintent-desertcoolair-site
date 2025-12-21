@@ -15,4 +15,18 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  ssgOptions: {
+    script: 'async',
+    formatting: 'minify',
+    crittersOptions: {
+      reduceInlineStyles: false,
+    },
+    includedRoutes: (paths: string[]) => {
+      // Pre-render marketing pages, exclude dynamic routes
+      return paths.filter((path: string) => 
+        !path.includes('admin') && 
+        !path.includes('dashboard')
+      );
+    },
+  },
 }));
