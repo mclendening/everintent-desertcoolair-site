@@ -12,7 +12,7 @@ export default function Home() {
         <title>Phoenix HVAC Services | AC Repair & Installation | Desert Cool Air</title>
         <meta
           name="description"
-          content="Phoenix's trusted HVAC experts. 24/7 emergency AC repair, installation, and maintenance. Same-day service. Free estimates. Call (602) 555-2665."
+          content="Phoenix's trusted HVAC experts. 24/7 emergency AC repair, installation, and maintenance. Same-day service. Free estimates. Call (602) 609-2300."
         />
         <meta
           name="keywords"

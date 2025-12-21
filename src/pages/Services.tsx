@@ -234,13 +234,12 @@ export default function Services() {
             </div>
             <Button 
               size="xl" 
-              variant="outline"
-              className="border-accent-foreground/30 text-accent-foreground hover:bg-accent-foreground/10 hover:text-accent-foreground"
+              variant="outline-dark"
               asChild
             >
-              <a href="tel:6025552665" className="flex items-center gap-2">
+              <a href="tel:6026092300" className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
-                Call (602) 555-2665 Now
+                Call (602) 609-2300 Now
               </a>
             </Button>
           </div>
