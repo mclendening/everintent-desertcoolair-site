@@ -8,7 +8,7 @@ export default function Contact() {
         <title>Contact Desert Cool Air | Free HVAC Estimate Phoenix</title>
         <meta
           name="description"
-          content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix. Call (602) 555-2665 or fill out our form."
+          content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix. Call (602) 609-2300 or fill out our form."
         />
         <link rel="canonical" href="https://desertcoolair.com/contact" />
       </Helmet>

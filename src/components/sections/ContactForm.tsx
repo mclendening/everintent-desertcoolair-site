@@ -89,7 +89,7 @@ export default function ContactForm() {
     } catch (error) {
       toast({
         title: "Something went wrong",
-        description: "Please try again or call us directly at (602) 555-2665.",
+        description: "Please try again or call us directly at (602) 609-2300.",
         variant: "destructive",
       });
     } finally {
@@ -112,9 +112,9 @@ export default function ContactForm() {
             </div>
           </div>
           <Button variant="accent" size="lg" asChild>
-            <a href="tel:6025552665" className="flex items-center gap-2">
+            <a href="tel:6026092300" className="flex items-center gap-2">
               <Phone className="h-5 w-5" />
-              Call Now: (602) 555-2665
+              Call Now: (602) 609-2300
             </a>
           </Button>
         </div>
@@ -141,10 +141,10 @@ export default function ContactForm() {
                 <div>
                   <div className="font-semibold text-foreground">Phone</div>
                   <a
-                    href="tel:6025552665"
+                    href="tel:6026092300"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    (602) 555-2665
+                    (602) 609-2300
                   </a>
                   <p className="text-sm text-muted-foreground">24/7 Emergency</p>
                 </div>
