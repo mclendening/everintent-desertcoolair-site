@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Menu, X, Snowflake } from "lucide-react";
+import { Phone, Menu, Snowflake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 
@@ -14,9 +14,24 @@ const navLinks = [
 export default function Header() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 w-full">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        isScrolled 
+          ? "bg-brand-navy/95 backdrop-blur-md shadow-lg" 
+          : "bg-transparent"
+      }`}
+    >
       <div className="container flex h-20 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
