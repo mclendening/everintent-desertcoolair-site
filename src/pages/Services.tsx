@@ -133,14 +133,14 @@ export default function Services() {
       <section 
         className="relative h-80 flex items-center overflow-hidden"
         style={{
-          backgroundImage: `url('/images/technician-working.jpg')`,
+          backgroundImage: `url('/images/hero-services-trucks.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/80 to-brand-navy/60" />
         <div className="container relative z-10">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl pt-8 md:pt-0">
             <span className="text-accent font-semibold text-sm uppercase tracking-wider">
               Our Services
             </span>
