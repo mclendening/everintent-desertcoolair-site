@@ -1,14 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Snowflake,
-  Flame,
   Wrench,
-  Settings,
+  PlusCircle,
+  Flame,
+  ShieldCheck,
+  Clock,
   Wind,
-  ThermometerSun,
   Check,
   Phone,
 } from "lucide-react";
@@ -17,81 +16,103 @@ import CTABanner from "@/components/sections/CTABanner";
 const services = [
   {
     id: "repair",
-    icon: Snowflake,
-    title: "AC Repair",
+    icon: Wrench,
+    title: "Air Conditioning Repair",
     description:
-      "Is your AC blowing warm air or making strange noises? Our expert technicians diagnose and repair all makes and models quickly and efficiently.",
+      "When your AC fails in the Arizona heat, you need fast, reliable service. Our certified technicians diagnose and repair all brands and models, with most repairs completed the same day you call.",
     features: [
-      "Same-day service available",
-      "All major brands serviced",
-      "Upfront pricing, no surprises",
-      "1-year labor warranty",
+      "Refrigerant leaks and recharging",
+      "Compressor and fan motor issues",
+      "Thermostat problems",
+      "Electrical component failures",
+      "Frozen evaporator coils",
+      "Drainage issues",
     ],
+    cta: "Schedule AC Repair",
+    image: "/images/technician-working.jpg",
   },
   {
     id: "installation",
-    icon: Settings,
-    title: "AC Installation",
+    icon: PlusCircle,
+    title: "AC Installation & Replacement",
     description:
-      "Upgrade to a new, energy-efficient cooling system. We'll help you choose the right size and model for your home and budget.",
+      "Whether you're replacing an aging system or installing AC in a new home, we help you choose the right system for your space and budget. We install all major brands including Trane, Carrier, Lennox, and Goodman.",
     features: [
-      "Free in-home consultation",
-      "Energy-efficient options",
-      "Professional installation",
-      "Manufacturer warranties",
+      "Free in-home estimates",
+      "Energy-efficient options (up to 21 SEER)",
+      "Financing available",
+      "10-year parts warranty",
+      "Proper sizing for maximum efficiency",
     ],
-  },
-  {
-    id: "maintenance",
-    icon: Wrench,
-    title: "Preventive Maintenance",
-    description:
-      "Keep your HVAC system running at peak performance with regular maintenance. Catch small problems before they become expensive repairs.",
-    features: [
-      "Bi-annual tune-ups",
-      "Priority scheduling",
-      "15% discount on repairs",
-      "Extended equipment life",
-    ],
+    cta: "Get Installation Quote",
+    image: "/images/comfortable-home.jpg",
   },
   {
     id: "heating",
     icon: Flame,
     title: "Heating Services",
     description:
-      "From heat pumps to furnaces, we keep you warm on those cool Arizona nights. Repair, maintenance, and installation available.",
+      "Phoenix winters can get cold. Our heating experts service and install furnaces, heat pumps, and dual-fuel systems to keep you comfortable year-round.",
     features: [
-      "All heating systems serviced",
-      "Energy efficiency upgrades",
-      "Carbon monoxide testing",
-      "24/7 emergency service",
+      "Furnace repair and installation",
+      "Heat pump service",
+      "Gas and electric systems",
+      "Pilot light and ignition issues",
+      "Ductwork inspection",
     ],
+    cta: "Schedule Heating Service",
+    image: "/images/comfortable-home.jpg",
+  },
+  {
+    id: "maintenance",
+    icon: ShieldCheck,
+    title: "Preventive Maintenance Plans",
+    description:
+      "The best repair is the one you never need. Our maintenance plans keep your system running efficiently, extend equipment life, and catch small problems before they become expensive emergencies.",
+    features: [
+      "Complete system inspection",
+      "Filter replacement",
+      "Coil cleaning",
+      "Refrigerant check",
+      "Electrical testing",
+      "Thermostat calibration",
+      "Priority scheduling",
+      "15% discount on repairs",
+    ],
+    cta: "Join Maintenance Plan",
+    image: "/images/technician-working.jpg",
+  },
+  {
+    id: "emergency",
+    icon: Clock,
+    title: "24/7 Emergency Service",
+    description:
+      "AC emergencies don't wait for business hours, and neither do we. Our emergency team is available around the clock to restore your comfort as quickly as possible.",
+    features: [
+      "Answer every call, day or night",
+      "Fast response times",
+      "Upfront emergency pricing",
+      "Fully stocked service vehicles",
+      "Certified technicians",
+    ],
+    cta: "Call Emergency Line",
+    image: "/images/technician-working.jpg",
   },
   {
     id: "air-quality",
     icon: Wind,
     title: "Indoor Air Quality",
     description:
-      "Breathe easier with our air quality solutions. We offer filtration, purification, and humidity control for healthier indoor air.",
+      "The air inside your home can be more polluted than outdoor air. We offer solutions to remove allergens, dust, and pollutants so your family breathes easier.",
     features: [
+      "HEPA air purifiers",
+      "UV germicidal lights",
+      "Whole-home humidifiers/dehumidifiers",
+      "Duct cleaning",
       "Air quality testing",
-      "HEPA filtration systems",
-      "UV air purifiers",
-      "Whole-home humidifiers",
     ],
-  },
-  {
-    id: "thermostats",
-    icon: ThermometerSun,
-    title: "Smart Thermostats",
-    description:
-      "Control your comfort and save energy with a smart thermostat. We install and configure all major brands.",
-    features: [
-      "Nest, Ecobee, Honeywell",
-      "Remote control via app",
-      "Energy savings reports",
-      "Professional setup",
-    ],
+    cta: "Improve Your Air Quality",
+    image: "/images/comfortable-home.jpg",
   },
 ];
 
@@ -99,91 +120,129 @@ export default function Services() {
   return (
     <>
       <Helmet>
-        <title>HVAC Services Phoenix | AC Repair & Installation | Desert Cool Air</title>
+        <title>HVAC Services in Phoenix | AC Repair, Installation, Heating | Desert Cool Air</title>
         <meta
           name="description"
-          content="Comprehensive HVAC services in Phoenix: AC repair, installation, maintenance, heating, and indoor air quality. Licensed technicians, same-day service available."
+          content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance, and indoor air quality. Licensed and insured."
         />
         <link rel="canonical" href="https://desertcoolair.com/services" />
       </Helmet>
 
       {/* Hero Section */}
-      <section className="bg-gradient-hero py-20">
-        <div className="container">
+      <section 
+        className="relative h-80 flex items-center overflow-hidden"
+        style={{
+          backgroundImage: `url('/images/technician-working.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/80 to-brand-navy/60" />
+        <div className="container relative z-10">
           <div className="max-w-3xl">
             <span className="text-accent font-semibold text-sm uppercase tracking-wider">
               Our Services
             </span>
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-primary-foreground mt-2 mb-6">
-              Complete HVAC Solutions for Phoenix Homes
+            <h1 className="text-4xl md:text-5xl font-heading font-bold text-primary-foreground mt-2 mb-4">
+              Our HVAC Services
             </h1>
-            <p className="text-primary-foreground/80 text-lg mb-8">
-              From emergency AC repairs to complete system installations, Desert Cool Air 
-              provides comprehensive heating and cooling services for residential and 
-              commercial properties throughout the Phoenix metro area.
+            <p className="text-primary-foreground/80 text-lg">
+              Comprehensive heating and cooling solutions for Phoenix homes and businesses
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="lg" asChild>
-                <Link to="/contact">Get Free Estimate</Link>
-              </Button>
-              <Button variant="hero-outline" size="lg" asChild>
-                <a href="tel:6025552665">
-                  <Phone className="h-5 w-5" />
-                  (602) 555-2665
-                </a>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Services List */}
+      {/* Services List - Alternating Layout */}
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="space-y-16">
+          <div className="space-y-24">
             {services.map((service, index) => (
               <div
                 key={service.id}
                 id={service.id}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                }`}
+                className="scroll-mt-24"
               >
-                <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                  <div className="w-16 h-16 rounded-xl bg-gradient-hero flex items-center justify-center mb-6">
-                    <service.icon className="h-8 w-8 text-primary-foreground" />
+                <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${
+                  index % 2 === 1 ? "" : ""
+                }`}>
+                  {/* Content */}
+                  <div className={index % 2 === 1 ? "lg:order-2" : ""}>
+                    <div className="w-16 h-16 rounded-xl bg-gradient-hero flex items-center justify-center mb-6">
+                      <service.icon className="h-8 w-8 text-primary-foreground" />
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+                      {service.title}
+                    </h2>
+                    <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+                    
+                    <div className="mb-8">
+                      <h3 className="font-heading font-semibold text-foreground mb-4">
+                        {service.id === "repair" ? "What We Fix:" : 
+                         service.id === "installation" ? "Benefits:" :
+                         service.id === "maintenance" ? "Maintenance Includes:" :
+                         service.id === "emergency" ? "Our Promise:" :
+                         "Services Include:"}
+                      </h3>
+                      <ul className="grid sm:grid-cols-2 gap-3">
+                        {service.features.map((feature) => (
+                          <li key={feature} className="flex items-start gap-3">
+                            <div className="w-5 h-5 rounded-full bg-brand-success/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <Check className="h-3 w-3 text-brand-success" />
+                            </div>
+                            <span className="text-foreground text-sm">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <Button variant="accent" size="lg" asChild>
+                      <Link to="/contact">{service.cta}</Link>
+                    </Button>
                   </div>
-                  <h2 className="text-3xl font-heading font-bold text-foreground mb-4">
-                    {service.title}
-                  </h2>
-                  <p className="text-muted-foreground text-lg mb-6">
-                    {service.description}
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3">
-                        <div className="w-5 h-5 rounded-full bg-brand-success/20 flex items-center justify-center flex-shrink-0">
-                          <Check className="h-3 w-3 text-brand-success" />
-                        </div>
-                        <span className="text-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button variant="accent" asChild>
-                    <Link to="/contact">Schedule Service</Link>
-                  </Button>
-                </div>
-                <div className={index % 2 === 1 ? "lg:order-1" : ""}>
-                  <Card className="bg-secondary border-0 overflow-hidden">
-                    <CardContent className="p-0">
-                      <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                        <service.icon className="h-24 w-24 text-primary/30" />
-                      </div>
-                    </CardContent>
-                  </Card>
+                  
+                  {/* Image */}
+                  <div className={index % 2 === 1 ? "lg:order-1" : ""}>
+                    <div className="rounded-2xl overflow-hidden shadow-elevated">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full aspect-[4/3] object-cover"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Emergency CTA */}
+      <section className="py-12 bg-accent">
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-accent-foreground mb-2">
+                Need Emergency Service?
+              </h2>
+              <p className="text-accent-foreground/80">
+                Our technicians are standing by 24/7 to help you.
+              </p>
+            </div>
+            <Button 
+              size="xl" 
+              variant="outline"
+              className="border-accent-foreground/30 text-accent-foreground hover:bg-accent-foreground/10 hover:text-accent-foreground"
+              asChild
+            >
+              <a href="tel:6025552665" className="flex items-center gap-2">
+                <Phone className="h-5 w-5" />
+                Call (602) 555-2665 Now
+              </a>
+            </Button>
           </div>
         </div>
       </section>

@@ -1,35 +1,35 @@
-import { Check, Users, Clock, DollarSign, Shield, ThumbsUp, Headphones } from "lucide-react";
+import { Check, BadgeCheck, Phone, DollarSign, Zap, ThumbsUp, MapPin } from "lucide-react";
 
 const features = [
   {
-    icon: Clock,
-    title: "Same-Day Service",
-    description: "We know AC emergencies can't wait. Most calls are addressed the same day.",
+    icon: BadgeCheck,
+    title: "Licensed & Insured",
+    description: "ROC licensed, fully bonded and insured for your protection",
+  },
+  {
+    icon: Phone,
+    title: "24/7 Emergency",
+    description: "AC emergency at 2am? We answer the phone.",
   },
   {
     icon: DollarSign,
     title: "Upfront Pricing",
-    description: "No surprises. Get a clear quote before any work begins.",
+    description: "No surprises. Know the cost before we start.",
   },
   {
-    icon: Shield,
-    title: "Licensed & Insured",
-    description: "ROC Licensed, fully insured, and background-checked technicians.",
-  },
-  {
-    icon: Users,
-    title: "Experienced Team",
-    description: "20+ years serving Phoenix. Our techs average 10 years experience each.",
+    icon: Zap,
+    title: "Same-Day Service",
+    description: "Most calls completed the same day you call.",
   },
   {
     icon: ThumbsUp,
     title: "Satisfaction Guaranteed",
-    description: "Not happy? We'll make it right or your money back.",
+    description: "Not happy? We make it right. Period.",
   },
   {
-    icon: Headphones,
-    title: "24/7 Support",
-    description: "Round-the-clock emergency service and customer support.",
+    icon: MapPin,
+    title: "Local Phoenix Team",
+    description: "We live here too. We know desert HVAC.",
   },
 ];
 
@@ -42,43 +42,46 @@ const stats = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 lg:py-24 bg-background">
       <div className="container">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
-          <div>
-            <span className="text-accent font-semibold text-sm uppercase tracking-wider">
-              Why Choose Us
-            </span>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mt-2 mb-6">
-              The Phoenix HVAC Team You Can Trust
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              When your AC breaks down in the Arizona heat, you need a team that responds fast, 
-              works efficiently, and stands behind their work. That's Desert Cool Air.
-            </p>
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-accent font-semibold text-sm uppercase tracking-wider">
+            Why Choose Us
+          </span>
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mt-2 mb-4">
+            Why Phoenix Trusts Us
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            When your AC breaks down in the Arizona heat, you need a team that responds fast, 
+            works efficiently, and stands behind their work.
+          </p>
+        </div>
 
-            {/* Features Grid */}
-            <div className="grid sm:grid-cols-2 gap-6">
-              {features.map((feature) => (
-                <div key={feature.title} className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <feature.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading font-semibold text-foreground mb-1">
-                      {feature.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm">
-                      {feature.description}
-                    </p>
-                  </div>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Features Grid - 2x3 */}
+          <div className="grid sm:grid-cols-2 gap-6">
+            {features.map((feature) => (
+              <div 
+                key={feature.title} 
+                className="flex gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-colors duration-300"
+              >
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
+                  <feature.icon className="h-6 w-6 text-accent" />
                 </div>
-              ))}
-            </div>
+                <div>
+                  <h3 className="font-heading font-semibold text-foreground mb-1">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Right Content - Stats Card */}
+          {/* Stats Card */}
           <div className="relative">
             <div className="bg-gradient-hero rounded-2xl p-8 md:p-12 text-primary-foreground shadow-elevated">
               <h3 className="font-heading font-bold text-2xl mb-8">
