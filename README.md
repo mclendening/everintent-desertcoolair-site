@@ -12,17 +12,56 @@ Part of the **LocalPros Network** by [EverIntent LLC](https://everintent.com).
 
 | Guide | Description |
 |-------|-------------|
-| [**Lovable Prompting Guide**](docs/LOVABLE_PROMPTING_GUIDE.md) | Step-by-step prompts to build SEO-optimized sites in Lovable |
+| [**Lovable Prompting Guide**](docs/LOVABLE_PROMPTING_GUIDE.md) | Complete prompting workflow for Lovable projects |
 | [**Tech Stack Details**](docs/TECH_STACK.md) | Architecture, patterns, and configuration |
 
 ---
 
-## Quick Start
+## Getting Started in Lovable
+
+### New Project Setup (In Order)
+
+1. **Connect GitHub** — Version control first
+   ```
+   Connect this project to GitHub. Create a new repository.
+   ```
+
+2. **Enable Lovable Cloud** — Backend infrastructure
+   ```
+   Enable Lovable Cloud for this project.
+   ```
+
+3. **Configure Deployment** — Vercel settings
+   ```
+   Review the vercel.json configuration for pre-rendered static site deployment.
+   ```
+
+4. **Follow the Prompting Guide** — [docs/LOVABLE_PROMPTING_GUIDE.md](docs/LOVABLE_PROMPTING_GUIDE.md)
+
+### PRD-Driven Development
+
+After initial setup, create PRD documents for each feature:
+
+```
+Create a PRD document at docs/PRD-[feature-name].md for [feature description].
+```
+
+Then implement:
+
+```
+Implement the feature described in docs/PRD-[feature-name].md.
+```
+
+See the [Prompting Guide](docs/LOVABLE_PROMPTING_GUIDE.md#prd-driven-development) for PRD templates.
+
+---
+
+## Quick Start (Local Development)
 
 ```bash
-npm install        # Install dependencies
-npm run dev        # Development server
-npx vite-react-ssg build  # Production build
+npm install                    # Install dependencies
+npm run dev                    # Development server
+npx vite-react-ssg build       # Production build
 ```
 
 ---
@@ -37,23 +76,71 @@ npx vite-react-ssg build  # Production build
 | Deployment | Vercel |
 | CRM | GoHighLevel |
 
----
-
-## Key Features
-
-- **Pre-rendered pages** for SEO and fast loading
-- **Mobile-first** responsive design
-- **GoHighLevel integration** for forms and chat
-- **TCPA-compliant** consent capture
-- **Edge functions** for serverless form processing
+See [Tech Stack Details](docs/TECH_STACK.md) for architecture and patterns.
 
 ---
 
-## Lead Flow
+## Key Configuration
+
+### Route Exclusions (vite.config.ts)
+
+Admin, dashboard, and auth routes are excluded from pre-rendering:
+
+```ts
+ssgOptions: {
+  includedRoutes: (paths: string[]) => {
+    return paths.filter((path: string) => 
+      !path.includes('admin') && 
+      !path.includes('dashboard') &&
+      !path.includes('auth')
+    );
+  },
+},
+```
+
+### Deployment (vercel.json)
+
+```json
+{
+  "buildCommand": "npx vite-react-ssg build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "cleanUrls": true,
+  "trailingSlash": false
+}
+```
+
+---
+
+## Project Structure
 
 ```
-Visitor → Form/Chat/Call → Vercel Edge → GoHighLevel → Partner
+├── docs/
+│   ├── LOVABLE_PROMPTING_GUIDE.md   # Prompting workflow
+│   ├── TECH_STACK.md                # Architecture details
+│   └── PRD-*.md                     # Feature requirements
+├── src/
+│   ├── components/
+│   │   ├── ClientOnly.tsx           # Hydration-safe wrapper
+│   │   ├── layout/                  # Header, Footer, Layout
+│   │   ├── sections/                # Page sections
+│   │   └── ui/                      # shadcn components
+│   ├── pages/                       # Route pages
+│   ├── routes.tsx                   # Route definitions
+│   ├── App.tsx                      # Providers
+│   └── main.tsx                     # Entry point
+├── api/                             # Vercel Edge Functions
+├── vite.config.ts                   # Build configuration
+└── vercel.json                      # Deployment settings
 ```
+
+---
+
+## Product Requirements
+
+| PRD | Status | Description |
+|-----|--------|-------------|
+| *Create PRDs in docs/ as needed* | — | — |
 
 ---
 
