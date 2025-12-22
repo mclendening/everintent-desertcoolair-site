@@ -1,90 +1,127 @@
-# Desert Cool Air — Phoenix HVAC Lead Generation
+# Lovable SEO Project Template
 
-**A high-converting HVAC lead generation website for the Phoenix, Arizona metro area.**
+A production-ready React + Vite + TypeScript template optimized for SEO and static site generation.
 
-Part of the **LocalPros Network** by [EverIntent LLC](https://everintent.com).
+---
 
-**Live Site:** https://desertcoolair.com/
+## Quick Start
+
+### Step 1: First Prompt (Create Blank Project)
+
+> ⚠️ **CRITICAL**: You cannot connect GitHub until AFTER your first prompt creates the project.
+
+Paste this minimal prompt to create your project foundation:
+
+```
+Create a new React + Vite + TypeScript + Tailwind CSS project with vite-react-ssg for static site generation.
+
+Keep it minimal:
+- Basic App.tsx with a "Hello World" heading
+- Standard vite.config.ts
+- Empty routes.tsx ready for pages
+
+Do not add any pages or features yet.
+```
+
+### Step 2: Connect GitHub
+
+After the first prompt completes:
+
+1. Click **GitHub** → **Connect to GitHub**
+2. Authorize Lovable GitHub App
+3. Click **Create Repository**
+
+### Step 3: Connect Vercel Pro
+
+1. Go to [vercel.com](https://vercel.com) and import your new GitHub repo
+2. Set build command: `npx vite-react-ssg build`
+3. Set output directory: `dist`
+4. Deploy
+
+### Step 4: Configure Vercel Domain
+
+1. **Settings → Domains** → Add your root domain (e.g., `yourdomain.com`)
+2. **DO NOT** redirect root to www
+3. **DO** redirect `www.yourdomain.com` → `yourdomain.com` (root)
+4. Set environment variables if needed
+
+### Step 5: Enable Supabase (Optional)
+
+Only if your PRD requires database/auth:
+
+```
+Enable Lovable Cloud for this project.
+```
+
+> **Note**: This project uses **Vercel Edge API** or **Supabase Edge API** for backend logic. We do NOT use Lovable Cloud backend deployment.
+
+---
+
+## Step 6: Add Your PRD
+
+Upload your PRD to `docs/` via one of these methods:
+
+| Method | How |
+|--------|-----|
+| **Git command** | `git add docs/PRD-*.md && git commit && git push` |
+| **GitHub Web** | Upload file directly in GitHub repo |
+| **Lovable prompt** | Paste PRD content in second prompt |
+
+### Second Prompt (PRD-Driven)
+
+```
+Read the PRD at docs/PRD-[feature-name].md.
+
+Parse the requirements and create docs/task_tracker.md with all tasks from the PRD.
+
+Format task_tracker.md as:
+
+# Task Tracker
+
+## In Progress
+- [ ] Task description (from FR-* or NFR-*)
+
+## Completed
+- [x] Completed tasks move here
+
+## Blocked
+- [ ] Blocked tasks with reason
+
+Then begin implementing the first task.
+```
 
 ---
 
 ## Documentation
 
-| Guide | Description |
-|-------|-------------|
-| [**Lovable Prompting Guide**](docs/LOVABLE_PROMPTING_GUIDE.md) | Complete prompting workflow for Lovable projects |
-| [**Tech Stack Details**](docs/TECH_STACK.md) | Architecture, patterns, and configuration |
+| Document | Purpose |
+|----------|---------|
+| [Prompting Guide](docs/LOVABLE_PROMPTING_GUIDE.md) | Step-by-step prompts for building features |
+| [Tech Stack](docs/TECH_STACK.md) | Architecture and configuration details |
+| `docs/PRD-*.md` | Product Requirements Documents |
+| `docs/task_tracker.md` | Task status parsed from PRD |
 
 ---
 
-## Getting Started in Lovable
+## Project Scope
 
-### New Project Setup (In Order)
+### In Scope
+- Static marketing pages (Home, About, Services, Contact)
+- SEO optimization with pre-rendered HTML
+- Contact form with edge function submission
+- Responsive design
 
-1. **Connect GitHub** — Version control first
-   ```
-   Connect this project to GitHub. Create a new repository.
-   ```
-
-2. **Enable Lovable Cloud** — Backend infrastructure
-   ```
-   Enable Lovable Cloud for this project.
-   ```
-
-3. **Configure Deployment** — Vercel settings
-   ```
-   Review the vercel.json configuration for pre-rendered static site deployment.
-   ```
-
-4. **Follow the Prompting Guide** — [docs/LOVABLE_PROMPTING_GUIDE.md](docs/LOVABLE_PROMPTING_GUIDE.md)
-
-### PRD-Driven Development
-
-After initial setup, create PRD documents for each feature:
-
-```
-Create a PRD document at docs/PRD-[feature-name].md for [feature description].
-```
-
-Then implement:
-
-```
-Implement the feature described in docs/PRD-[feature-name].md.
-```
-
-See the [Prompting Guide](docs/LOVABLE_PROMPTING_GUIDE.md#prd-driven-development) for PRD templates.
+### Out of Scope
+- ❌ Admin routes / dashboard
+- ❌ User authentication / login
+- ❌ Supabase user management
+- ❌ Lovable Cloud backend deployment
 
 ---
 
-## Quick Start (Local Development)
+## Configuration
 
-```bash
-npm install                    # Install dependencies
-npm run dev                    # Development server
-npx vite-react-ssg build       # Production build
-```
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| Framework | React 18 + TypeScript |
-| Build | Vite + vite-react-ssg |
-| Styling | Tailwind CSS + shadcn/ui |
-| Deployment | Vercel |
-| CRM | GoHighLevel |
-
-See [Tech Stack Details](docs/TECH_STACK.md) for architecture and patterns.
-
----
-
-## Key Configuration
-
-### Route Exclusions (vite.config.ts)
-
-Admin, dashboard, and auth routes are excluded from pre-rendering:
+### vite.config.ts (Route Exclusions)
 
 ```ts
 ssgOptions: {
@@ -95,10 +132,10 @@ ssgOptions: {
       !path.includes('auth')
     );
   },
-},
+}
 ```
 
-### Deployment (vercel.json)
+### vercel.json
 
 ```json
 {
@@ -112,62 +149,52 @@ ssgOptions: {
 
 ---
 
-## Project Structure
+## PRD Template
+
+Create new PRDs at `docs/PRD-[feature-name].md`:
+
+```markdown
+# PRD: [Feature Name]
+
+## Overview
+[Brief description]
+
+## Goals
+- Primary goal
+- Success metrics
+
+## Requirements
+
+### Functional Requirements
+- [ ] FR-1: [Requirement]
+- [ ] FR-2: [Requirement]
+
+### Non-Functional Requirements
+- [ ] NFR-1: [Requirement]
+
+## Out of Scope
+- [Explicitly excluded items]
+
+## Technical Approach
+- Use Vercel Edge API for backend logic
+- OR Supabase Edge Functions if Supabase is enabled
+```
+
+---
+
+## Edge API Pattern
+
+This project uses **Vercel Edge API** (preferred) or **Supabase Edge Functions** for backend logic.
 
 ```
-├── docs/
-│   ├── LOVABLE_PROMPTING_GUIDE.md   # Prompting workflow
-│   ├── TECH_STACK.md                # Architecture details
-│   └── PRD-*.md                     # Feature requirements
-├── src/
-│   ├── components/
-│   │   ├── ClientOnly.tsx           # Hydration-safe wrapper
-│   │   ├── layout/                  # Header, Footer, Layout
-│   │   ├── sections/                # Page sections
-│   │   └── ui/                      # shadcn components
-│   ├── pages/                       # Route pages
-│   ├── routes.tsx                   # Route definitions
-│   ├── App.tsx                      # Providers
-│   └── main.tsx                     # Entry point
-├── api/                             # Vercel Edge Functions
-├── vite.config.ts                   # Build configuration
-└── vercel.json                      # Deployment settings
+api/
+  submit-form.ts    # Vercel Edge Function
 ```
 
----
-
-## Product Requirements
-
-| PRD | Status | Description |
-|-----|--------|-------------|
-| *Create PRDs in docs/ as needed* | — | — |
+We do NOT use:
+- Lovable Cloud backend deployment
+- Direct Supabase client-side calls for sensitive operations
 
 ---
 
-## Environment Variables
-
-| Variable | Purpose |
-|----------|---------|
-| `GHL_LOCATION_ID` | GoHighLevel sub-account |
-| `GHL_WEBHOOK_URL` | Form submission endpoint |
-| `GHL_WIDGET_ID` | Chat widget ID |
-
----
-
-## Compliance
-
-**TCPA Consent:** All forms require explicit checkbox consent before submission.
-
-**Operating Entity:** Services performed by licensed independent third-party providers.
-
----
-
-## Author
-
-**Michael Clendening** — [EverIntent LLC](https://everintent.com)
-
-CCIE #6487 | 25+ years enterprise technology | GoHighLevel certified
-
----
-
-© 2025 EverIntent LLC. All rights reserved.
+*See [docs/LOVABLE_PROMPTING_GUIDE.md](docs/LOVABLE_PROMPTING_GUIDE.md) for complete prompting instructions.*
