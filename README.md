@@ -83,6 +83,79 @@ EverIntent LLC builds, owns, and operates portfolio sites that look and feel lik
 
 ---
 
+## ⚙️ SSG Configuration (Critical Details)
+
+This project uses **vite-react-ssg** for Static Site Generation. Understanding these details is critical for maintaining SSG functionality.
+
+### Build Command
+```bash
+# SSG build (generates pre-rendered HTML)
+npx vite-react-ssg build
+
+# Standard build (CSR only - NOT what we want)
+vite build
+```
+
+**Important**: The `vercel.json` overrides the build command to use `npx vite-react-ssg build`. If deploying elsewhere, ensure this command is used.
+
+### Critical Files
+
+| File | Purpose |
+|------|---------|
+| `src/main.tsx` | Uses `ViteReactSSG()` instead of `createRoot()` |
+| `src/routes.tsx` | Defines routes with `RouteRecord[]` type from vite-react-ssg |
+| `src/components/ClientOnly.tsx` | Hydration-safe wrapper for portal components |
+| `src/App.tsx` | SSG-safe providers with QueryClient inside component |
+| `vite.config.ts` | Contains `ssgOptions` configuration |
+
+### Hydration Safety Rules
+
+| Rule | Why |
+|------|-----|
+| QueryClient created inside component with `useState()` | Prevents shared state across SSR renders |
+| Toaster/Sonner wrapped in `<ClientOnly>` | Portal components cause hydration mismatch |
+| Use `Head` from vite-react-ssg, not react-helmet-async | Built-in SSG head management |
+| Lazy-loaded pages with `React.lazy()` | Automatic code splitting per route |
+
+### Adding New Pages
+
+1. Create the page component in `src/pages/`
+2. Use `Head` from vite-react-ssg for meta tags:
+   ```tsx
+   import { Head } from "vite-react-ssg";
+   
+   export default function NewPage() {
+     return (
+       <>
+         <Head>
+           <title>Page Title | Desert Cool Air</title>
+           <meta name="description" content="..." />
+         </Head>
+         {/* Page content */}
+       </>
+     );
+   }
+   ```
+3. Add to `src/routes.tsx`:
+   ```tsx
+   { 
+     path: 'new-page', 
+     Component: React.lazy(() => import('@/pages/NewPage')),
+   },
+   ```
+
+### Verifying SSG is Working
+
+After deploying, check the page source:
+```
+view-source:https://desertcoolair.com/
+```
+
+✅ **SSG working**: Full HTML content visible in source  
+❌ **CSR only**: Only `<div id="root"></div>` with no content
+
+---
+
 ## 🔄 Lead Flow Architecture
 
 ```
@@ -147,6 +220,7 @@ desert-cool-air/
 │   └── submit-form.ts        # Vercel Edge Function → GHL
 ├── src/
 │   ├── components/
+│   │   ├── ClientOnly.tsx    # SSG hydration-safe wrapper
 │   │   ├── layout/
 │   │   │   ├── Header.tsx    # Sticky nav, mobile menu
 │   │   │   └── Footer.tsx    # 4-col, legal disclosures
