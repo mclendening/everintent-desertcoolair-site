@@ -136,13 +136,16 @@ vite build
      );
    }
    ```
-3. Add to `src/routes.tsx`:
+3. Add to `src/routes.tsx` with the `entry` property:
    ```tsx
    { 
      path: 'new-page', 
      Component: React.lazy(() => import('@/pages/NewPage')),
+     entry: 'src/pages/NewPage.tsx',
    },
    ```
+
+**CRITICAL**: The `entry` property tells vite-react-ssg which file contains the `Head` component for that route. Without it, meta tags won't be pre-rendered.
 
 ### Verifying SSG is Working
 

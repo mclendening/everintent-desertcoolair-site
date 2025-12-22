@@ -122,11 +122,13 @@ export default function Services() {
     <>
       <Head>
         <title>HVAC Services in Phoenix | AC Repair, Installation, Heating | Desert Cool Air</title>
-        <meta
-          name="description"
-          content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance, and indoor air quality. Licensed and insured."
-        />
+        <meta name="description" content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance, and indoor air quality. Licensed and insured." />
         <link rel="canonical" href="https://desertcoolair.com/services" />
+        <meta property="og:title" content="HVAC Services in Phoenix | AC Repair, Installation, Heating | Desert Cool Air" />
+        <meta property="og:description" content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance, and indoor air quality." />
+        <meta property="og:url" content="https://desertcoolair.com/services" />
+        <meta name="twitter:title" content="HVAC Services in Phoenix | AC Repair, Installation, Heating | Desert Cool Air" />
+        <meta name="twitter:description" content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance." />
       </Head>
 
       {/* Hero Section */}
