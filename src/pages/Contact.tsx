@@ -6,11 +6,13 @@ export default function Contact() {
     <>
       <Head>
         <title>Contact Desert Cool Air | Free HVAC Estimate Phoenix</title>
-        <meta
-          name="description"
-          content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix. Call (602) 609-2300 or fill out our form."
-        />
+        <meta name="description" content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix. Call (602) 609-2300 or fill out our form." />
         <link rel="canonical" href="https://desertcoolair.com/contact" />
+        <meta property="og:title" content="Contact Desert Cool Air | Free HVAC Estimate Phoenix" />
+        <meta property="og:description" content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix." />
+        <meta property="og:url" content="https://desertcoolair.com/contact" />
+        <meta name="twitter:title" content="Contact Desert Cool Air | Free HVAC Estimate Phoenix" />
+        <meta name="twitter:description" content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix." />
       </Head>
 
       {/* Hero Section */}
