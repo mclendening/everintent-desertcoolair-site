@@ -104,7 +104,7 @@ vite build
 |------|---------|
 | `src/main.tsx` | Uses `ViteReactSSG()` instead of `createRoot()` |
 | `src/routes.tsx` | Defines routes with `RouteRecord[]` type from vite-react-ssg |
-| `src/components/ClientOnly.tsx` | Hydration-safe wrapper for portal components |
+| `src/components/ClientOnly.tsx` | Hydration-safe wrapper for portal/dynamic components |
 | `src/App.tsx` | SSG-safe providers with QueryClient inside component |
 | `vite.config.ts` | Contains `ssgOptions` configuration |
 
@@ -112,10 +112,11 @@ vite build
 
 | Rule | Why |
 |------|-----|
+| **NO `React.lazy()`** | Causes inconsistent pre-rendering; use direct imports |
 | QueryClient created inside component with `useState()` | Prevents shared state across SSR renders |
-| Toaster/Sonner wrapped in `<ClientOnly>` | Portal components cause hydration mismatch |
+| Portal components (Sheet, Toaster) wrapped in `<ClientOnly>` | Portals cause hydration mismatch |
+| Scroll-dependent styles use `mounted` state | Server has no scroll position; wait for client mount |
 | Use `Head` from vite-react-ssg, not react-helmet-async | Built-in SSG head management |
-| Lazy-loaded pages with `React.lazy()` | Automatic code splitting per route |
 
 ### Adding New Pages
 
@@ -136,16 +137,37 @@ vite build
      );
    }
    ```
-3. Add to `src/routes.tsx` with the `entry` property:
+3. Add **direct import** to `src/routes.tsx`:
    ```tsx
+   // At top of file - direct imports (NOT React.lazy)
+   import NewPage from '@/pages/NewPage';
+   
+   // In routes array
    { 
      path: 'new-page', 
-     Component: React.lazy(() => import('@/pages/NewPage')),
-     entry: 'src/pages/NewPage.tsx',
+     element: <NewPage />,
    },
    ```
 
-**CRITICAL**: The `entry` property tells vite-react-ssg which file contains the `Head` component for that route. Without it, meta tags won't be pre-rendered.
+**CRITICAL**: Do NOT use `React.lazy()` for SSG routes. Lazy loading creates inconsistent pre-rendered HTML because components may be in "loading" state during build, causing hydration errors in tools like Google Rich Results Test.
+
+### ClientOnly Component Usage
+
+For components that use browser APIs, portals, or have dynamic content that differs between server and client:
+
+```tsx
+import { ClientOnly } from '@/components/ClientOnly';
+
+// Wrap portal components (Sheet, Dialog, Toaster, etc.)
+<ClientOnly fallback={<Button>Menu</Button>}>
+  <Sheet>...</Sheet>
+</ClientOnly>
+
+// Wrap scroll-dependent UI
+const [mounted, setMounted] = useState(false);
+useEffect(() => { setMounted(true); }, []);
+const headerBg = mounted && isScrolled ? "bg-navy" : "bg-transparent";
+```
 
 ### Verifying SSG is Working
 
@@ -156,6 +178,13 @@ view-source:https://desertcoolair.com/
 
 ✅ **SSG working**: Full HTML content visible in source  
 ❌ **CSR only**: Only `<div id="root"></div>` with no content
+
+### Testing with Google Rich Results
+
+1. Go to https://search.google.com/test/rich-results
+2. Test each page URL (home, /services, /about, /contact)
+3. Run each URL **twice** — SSG errors often appear on second request
+4. Check for "Page cannot be rendered" or hydration errors
 
 ---
 
