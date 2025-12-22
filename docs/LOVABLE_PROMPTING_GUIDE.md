@@ -671,15 +671,145 @@ npx vite-react-ssg build
 
 Check `dist/index.html`:
 
-- ✅ Full page content visible (not empty div)
+- ✅ Full page content visible (not empty `<div id="root">`)
 - ✅ Meta tags in `<head>` section
 - ✅ Text content pre-rendered
+- ✅ No JavaScript-only placeholders
 
 ### Google Rich Results Test
 
+Use this tool to verify your SSG pages render correctly for search engines:
+
+**URL:** https://search.google.com/test/rich-results
+
+#### Desktop Testing
+
 1. Go to https://search.google.com/test/rich-results
-2. Enter your page URL
-3. **Test each URL twice** — some issues only appear on second request
+2. Enter your deployed page URL (e.g., `https://desertcoolair.com`)
+3. Wait for the test to complete
+4. Click **"View Tested Page"** → **"HTML"** tab
+
+**What to verify:**
+
+- ✅ Full page content visible in HTML (not empty div)
+- ✅ Meta tags present (`<title>`, `<meta name="description">`, OG tags)
+- ✅ H1, H2 headings rendered
+- ✅ Navigation links present
+- ✅ No "Page cannot be rendered" errors
+
+#### Mobile Testing
+
+1. After desktop test completes, look for **"Test URL"** dropdown
+2. Select **"Mobile: Smartphone"** user agent
+3. Re-run the test
+4. Verify same content renders on mobile view
+
+**Why test mobile separately:**
+
+- Googlebot primarily uses mobile-first indexing
+- Some hydration issues only appear on mobile user-agent
+- Responsive CSS may affect content visibility
+
+#### Test Each URL Twice
+
+**Important:** Run each URL through the test twice. Some hydration or caching issues only appear on the second request when:
+
+- Initial render worked but re-hydration fails
+- Client-side state differs from server-rendered HTML
+- Portals or modals cause mismatch
+
+#### Testing Checklist
+
+| Check                          | Desktop | Mobile |
+| ------------------------------ | ------- | ------ |
+| Full HTML content (not empty)  | ✅      | ✅     |
+| `<title>` tag correct          | ✅      | ✅     |
+| `<meta description>` present   | ✅      | ✅     |
+| Open Graph tags present        | ✅      | ✅     |
+| H1 heading rendered            | ✅      | ✅     |
+| Navigation links visible       | ✅      | ✅     |
+| No "Page cannot be rendered"   | ✅      | ✅     |
+| No JavaScript errors           | ✅      | ✅     |
+| Structured data detected (if any) | ✅   | ✅     |
+
+#### Common Test Failures and Fixes
+
+| Error                        | Cause                          | Fix                                      |
+| ---------------------------- | ------------------------------ | ---------------------------------------- |
+| "Page cannot be rendered"    | Browser-only API used at top level | Wrap in ClientOnly or useEffect      |
+| Blank/empty content          | React.lazy() used for pages    | Use direct imports only                  |
+| Missing meta tags            | Wrong Head import              | Use `Head` from `vite-react-ssg`         |
+| Hydration mismatch warning   | Server/client HTML differs     | Use mounted state or ClientOnly          |
+| Content flashes on load      | CSS not inlined                | Check crittersOptions in vite.config.ts  |
+
+#### What Passing Looks Like
+
+When viewing the **HTML** tab of a passing test:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Phoenix HVAC Services | AC Repair & Installation | Desert Cool Air</title>
+  <meta name="description" content="Phoenix's trusted HVAC experts...">
+  <meta property="og:title" content="Phoenix HVAC Services...">
+  <!-- More meta tags -->
+</head>
+<body>
+  <div id="root">
+    <header>
+      <!-- Full navigation rendered -->
+    </header>
+    <main>
+      <section>
+        <h1>Phoenix's Most Trusted HVAC Experts</h1>
+        <!-- Full page content rendered -->
+      </section>
+    </main>
+    <footer>
+      <!-- Footer content -->
+    </footer>
+  </div>
+</body>
+</html>
+```
+
+#### What Failing Looks Like
+
+A failing SSG page shows minimal HTML:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title></title>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
+```
+
+This means the page requires JavaScript to render — search engines won't see your content.
+
+---
+
+## Quick Testing Commands
+
+```bash
+# Build and verify locally
+npx vite-react-ssg build
+
+# Check a specific page's output
+cat dist/index.html | head -50
+
+# Verify meta tags are present
+grep -E "<title>|<meta name=\"description\"" dist/index.html
+
+# Check all generated pages
+ls -la dist/*.html
+```
 
 ---
 
