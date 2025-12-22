@@ -1,71 +1,241 @@
-# Lovable Project Prompting Guide
+# Lovable SEO Core Prompting Guide
 
-**The definitive guide for building production-ready, SEO-optimized websites in Lovable.**
+**A step-by-step guide for building production-ready, SEO-optimized websites in Lovable.**
 
-This guide provides copy-paste prompts that establish professional patterns from day one. Each code example includes JSDoc documentation for maintainability.
+This guide provides copy-paste prompts with JSDoc documentation patterns. Follow the phases in order—the sequence matters.
 
 ---
 
 ## Table of Contents
 
-1. [Getting Started](#getting-started) — Connect GitHub, Supabase, Vercel
-2. [Phase 1: Project Foundation](#phase-1-project-foundation) — Core architecture
-3. [Phase 2: SEO Page Template](#phase-2-seo-page-template) — Meta tags pattern
-4. [Phase 3: Responsive Header](#phase-3-responsive-header) — Hydration-safe navigation
-5. [Phase 4: Adding Pages](#phase-4-adding-pages) — Correct page setup
-6. [PRD-Driven Development](#prd-driven-development) — Requirements documents
-7. [Quick Reference](#quick-reference) — Patterns and troubleshooting
+1. [Before You Start](#before-you-start) — What you need to know
+2. [Phase 1: First Prompt](#phase-1-first-prompt) — Minimal project creation
+3. [Phase 2: Connect Services](#phase-2-connect-services) — GitHub, Vercel, (Supabase if needed)
+4. [Phase 3: Upload PRD](#phase-3-upload-prd) — Add requirements document
+5. [Phase 4: Establish Task Tracker](#phase-4-establish-task-tracker) — Parse PRD into tasks
+6. [Phase 5: Build Foundation](#phase-5-build-foundation) — Core architecture
+7. [Phase 6: PRD-Driven Development](#phase-6-prd-driven-development) — Feature implementation
+8. [Code Patterns](#code-patterns) — JSDoc, SEO, Hydration safety
+9. [Quick Reference](#quick-reference) — Common issues and solutions
 
 ---
 
-## Getting Started
+## Before You Start
 
-Before building features, connect your essential services in order.
+### Key Constraints
 
-### Step 1: Connect GitHub
+- **You cannot connect GitHub until after your first prompt** — Lovable creates the project on the first prompt
+- **Keep the first prompt minimal** — Just enough to create a blank project
+- **All subsequent prompts must follow PRD and guidelines** — No ad-hoc development
+- **JSDoc everything** — Every exported function, component, and type gets documentation
+- **Exclude admin routes from pre-rendering** — Always filter these in vite.config.ts
 
-> **Prompt:**
-```
-Connect this project to GitHub. Create a new repository.
-```
+### Backend Options
 
-**Why first?** Version control from the start. All code changes sync automatically.
+Choose your backend approach before starting:
 
-### Step 2: Enable Lovable Cloud (Supabase)
+| Option | Use When |
+|--------|----------|
+| **Vercel Edge API** | Simple forms, webhooks, API proxying |
+| **Supabase Edge API** | Database needed, complex auth, real-time features |
+| **No backend** | Static content only |
 
-> **Prompt:**
-```
-Enable Lovable Cloud for this project. I need database and authentication capabilities.
-```
-
-**Why second?** Backend infrastructure for forms, auth, and data storage.
-
-### Step 3: Configure Vercel Deployment
-
-> **Prompt:**
-```
-Review the vercel.json configuration for this project. Ensure it's set up for pre-rendered static site deployment with clean URLs.
-```
-
-**Why third?** Production deployment pipeline ready before building features.
+**Important:** This guide assumes Vercel Edge API. If using Supabase, enable Lovable Cloud in Phase 2.
 
 ---
 
-## Phase 1: Project Foundation
+## Phase 1: First Prompt
 
-> **Copy this prompt into Lovable:**
+Your first prompt creates the project. Keep it minimal—we'll build properly after connecting services.
+
+> **Copy this prompt into a NEW Lovable project:**
 
 ```
-Create the project foundation with JSDoc documentation throughout.
+Create a minimal React + TypeScript + Tailwind CSS project with:
+- A simple home page with placeholder content
+- Basic project structure
+- No routing configuration yet
 
-Set up these files:
+Keep it minimal. We will configure properly after connecting GitHub.
+```
+
+**Wait for this to complete before proceeding.**
+
+---
+
+## Phase 2: Connect Services
+
+### Step 2a: Connect GitHub
+
+1. In Lovable editor, click **GitHub**
+2. Click **Connect to GitHub**
+3. Authorize Lovable's GitHub App
+4. Select your GitHub account/organization
+5. Click **Create Repository**
+
+Your code now syncs automatically with every change.
+
+### Step 2b: Connect Vercel Pro
+
+1. Go to [vercel.com](https://vercel.com)
+2. Click **Add New → Project**
+3. Import your new GitHub repository
+4. Configure settings:
+
+| Setting | Value |
+|---------|-------|
+| Build Command | `npx vite-react-ssg build` |
+| Output Directory | `dist` |
+| Framework Preset | `Other` |
+
+5. Add environment variables (if needed)
+6. Deploy
+
+### Step 2c: Configure Custom Domain (Vercel)
+
+1. Go to **Project Settings → Domains**
+2. Add your root domain: `yourdomain.com`
+3. Add www subdomain: `www.yourdomain.com`
+4. Configure redirects:
+   - **Root domain** = Primary (no redirect)
+   - **WWW** = Redirects to root domain
+
+**Critical:** Do NOT redirect root to www. Always redirect www to root.
+
+### Step 2d: Enable Supabase (Only If Needed)
+
+Skip this step if using Vercel Edge API only.
+
+If your project requires database or auth:
+
+1. In Lovable editor, click **Cloud**
+2. Click **Enable Lovable Cloud**
+3. Wait for Supabase provisioning
+
+**Out of scope for many projects:**
+- Admin routes
+- User login/authentication
+- Database management UI
+
+---
+
+## Phase 3: Upload PRD
+
+Before building features, create a Product Requirements Document.
+
+### Option A: Create via Lovable Prompt
+
+> **Second prompt in Lovable:**
+
+```
+Create a PRD document at docs/PRD-homepage.md with this structure:
+
+## Overview
+[Brief description of the feature]
+
+## Goals
+- Primary goal
+- Success metrics
+
+## User Stories
+As a [user], I want [feature] so that [benefit].
+
+## Requirements
+
+### Functional Requirements
+- [ ] FR-1: [Requirement description]
+- [ ] FR-2: [Requirement description]
+
+### Non-Functional Requirements
+- [ ] NFR-1: Page load under 3 seconds
+- [ ] NFR-2: Mobile responsive
+
+## Technical Approach
+[Implementation strategy]
+
+## Dependencies
+- Environment variables needed
+- External services
+
+## Out of Scope
+- Features NOT included
+
+## Timeline
+- Phase 1: [Milestone]
+```
+
+### Option B: Upload via Git
+
+```bash
+# Create PRD locally
+echo "# PRD: Homepage" > docs/PRD-homepage.md
+
+# Add and push
+git add docs/PRD-homepage.md
+git commit -m "Add homepage PRD"
+git push
+```
+
+### Option C: Upload via GitHub Web
+
+1. Go to your repository on GitHub
+2. Navigate to `docs/` folder (create if needed)
+3. Click **Add file → Create new file**
+4. Name: `PRD-homepage.md`
+5. Add content and commit
+
+---
+
+## Phase 4: Establish Task Tracker
+
+Parse the PRD into a trackable task list.
+
+> **Prompt in Lovable:**
+
+```
+Parse docs/PRD-homepage.md and create docs/task_tracker.md with this format:
+
+# Task Tracker
+
+Generated from: PRD-homepage.md
+Last updated: [current date]
+
+## Tasks
+
+| ID | Requirement | Status | Notes |
+|----|-------------|--------|-------|
+| FR-1 | [Description from PRD] | ⬜ Pending | |
+| FR-2 | [Description from PRD] | ⬜ Pending | |
+| NFR-1 | [Description from PRD] | ⬜ Pending | |
+
+## Status Legend
+- ⬜ Pending
+- 🔄 In Progress
+- ✅ Complete
+- ❌ Blocked
+
+## Change Log
+- [date]: Initial task list created from PRD
+```
+
+---
+
+## Phase 5: Build Foundation
+
+Now build the project foundation with proper architecture.
+
+> **Prompt in Lovable:**
+
+```
+Set up the project foundation with JSDoc documentation throughout. Update docs/task_tracker.md as you complete each item.
+
+Create these files:
 
 1. **src/main.tsx** - Entry point:
 ```tsx
 /**
  * @fileoverview Application entry point for vite-react-ssg
  * @description Initializes static site generation with defined routes
- * @see {@link ./routes.tsx} for route definitions
  */
 import { ViteReactSSG } from 'vite-react-ssg';
 import { routes } from './routes';
@@ -73,7 +243,7 @@ import './index.css';
 
 /**
  * Creates the SSG root for static HTML generation
- * @remarks This replaces createRoot from react-dom for SSG builds
+ * @remarks Replaces createRoot from react-dom for SSG builds
  */
 export const createRoot = ViteReactSSG({ routes });
 ```
@@ -86,9 +256,7 @@ export const createRoot = ViteReactSSG({ routes });
  */
 import { useState, useEffect, ReactNode } from 'react';
 
-/**
- * Props for ClientOnly component
- */
+/** Props for ClientOnly component */
 interface ClientOnlyProps {
   /** Content to render only in browser */
   children: ReactNode;
@@ -105,14 +273,9 @@ interface ClientOnlyProps {
  * - Display dynamic data (Date, Math.random)
  * 
  * @example
- * ```tsx
  * <ClientOnly fallback={<Button>Menu</Button>}>
  *   <Sheet>...</Sheet>
  * </ClientOnly>
- * ```
- * 
- * @param props - Component props
- * @returns Fallback during SSR, children after hydration
  */
 export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
   const [mounted, setMounted] = useState(false);
@@ -125,87 +288,26 @@ export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
 }
 ```
 
-3. **src/App.tsx** - App wrapper with providers:
-```tsx
-/**
- * @fileoverview Root application component with global providers
- * @description Wraps all pages with QueryClient and toast notifications
- */
-import { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from '@/components/ui/sonner';
-import { ClientOnly } from '@/components/ClientOnly';
-
-/**
- * Global providers wrapper for the application
- * 
- * @description Provides:
- * - React Query for server state management
- * - Toast notifications (client-only to prevent hydration issues)
- * 
- * @remarks QueryClient must be created inside component to prevent
- * SSR state leakage between requests
- * 
- * @param props - Component props
- * @param props.children - Child components to wrap
- */
-function AppProviders({ children }: { children: React.ReactNode }) {
-  // Create QueryClient in useState to ensure one instance per render
-  const [queryClient] = useState(() => new QueryClient());
-  
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ClientOnly>
-        <Toaster />
-      </ClientOnly>
-    </QueryClientProvider>
-  );
-}
-
-/**
- * Root App component
- * 
- * @param props - Component props
- * @param props.children - Route content from vite-react-ssg
- * @returns Application wrapped with providers
- */
-export default function App({ children }: { children?: React.ReactNode }) {
-  return <AppProviders>{children}</AppProviders>;
-}
-```
-
-4. **src/routes.tsx** - Page routing:
+3. **src/routes.tsx** - Route definitions:
 ```tsx
 /**
  * @fileoverview Application route definitions
  * @description All page routes for vite-react-ssg static generation
  * 
- * @important NEVER use React.lazy() — it breaks pre-rendering
- * @important All page imports must be static/direct imports
+ * @important NEVER use React.lazy() — breaks pre-rendering
+ * @important All page imports must be direct/static imports
  */
 import type { RouteRecord } from 'vite-react-ssg';
 import App from './App';
 import Layout from '@/components/layout/Layout';
 
-// ============================================
 // DIRECT IMPORTS ONLY — NO REACT.LAZY()
-// ============================================
 import Home from '@/pages/Home';
-import About from '@/pages/About';
-import Services from '@/pages/Services';
-import Contact from '@/pages/Contact';
 import NotFound from '@/pages/NotFound';
 
 /**
  * Application routes for static site generation
- * 
  * @description Each route becomes a pre-rendered HTML file
- * 
- * @example Adding a new page:
- * 1. Create src/pages/NewPage.tsx
- * 2. Add direct import above: import NewPage from '@/pages/NewPage';
- * 3. Add route below: { path: 'new-page', element: <NewPage /> }
  */
 export const routes: RouteRecord[] = [
   {
@@ -213,49 +315,13 @@ export const routes: RouteRecord[] = [
     element: <App><Layout /></App>,
     children: [
       { index: true, element: <Home /> },
-      { path: 'about', element: <About /> },
-      { path: 'services', element: <Services /> },
-      { path: 'contact', element: <Contact /> },
       { path: '*', element: <NotFound /> },
     ],
   },
 ];
 ```
 
-5. **src/components/layout/Layout.tsx**:
-```tsx
-/**
- * @fileoverview Main layout wrapper
- * @description Provides consistent header/footer structure across pages
- */
-import { Outlet } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
-
-/**
- * Page layout component
- * 
- * @description Wraps all pages with:
- * - Fixed header navigation
- * - Flexible main content area
- * - Footer with site info
- * 
- * @returns Layout structure with Outlet for page content
- */
-export default function Layout() {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
-  );
-}
-```
-
-6. **vite.config.ts** - Build configuration:
+4. **vite.config.ts** - Build configuration with route exclusions:
 ```ts
 /**
  * @fileoverview Vite configuration with SSG options
@@ -278,22 +344,16 @@ export default defineConfig(({ mode }) => ({
   },
   /**
    * Static Site Generation options
-   * @see https://github.com/Daydreamer-rtte/vite-react-ssg
    */
   ssgOptions: {
-    /** Load scripts asynchronously for performance */
     script: 'async',
-    /** Minify HTML output */
     formatting: 'minify',
-    /** CSS optimization settings */
     crittersOptions: {
       reduceInlineStyles: false,
     },
     /**
      * Filter routes for pre-rendering
-     * @description Excludes admin, dashboard, and auth routes from SSG
-     * @param paths - All discovered route paths
-     * @returns Paths to pre-render
+     * @description ALWAYS exclude admin, dashboard, and auth routes
      */
     includedRoutes: (paths: string[]) => {
       return paths.filter((path: string) => 
@@ -306,7 +366,7 @@ export default defineConfig(({ mode }) => ({
 }));
 ```
 
-7. **vercel.json** - Deployment settings:
+5. **vercel.json** - Deployment settings:
 ```json
 {
   "buildCommand": "npx vite-react-ssg build",
@@ -320,58 +380,122 @@ export default defineConfig(({ mode }) => ({
 
 ---
 
-## Phase 2: SEO Page Template
+## Phase 6: PRD-Driven Development
 
-> **Copy this prompt into Lovable:**
+All feature development follows this pattern:
+
+### Implementing a Requirement
+
+> **Prompt template:**
 
 ```
-Create page components with JSDoc and SEO meta tags using Head from vite-react-ssg.
+Implement [FR-X] from docs/PRD-[feature].md:
+[Paste the specific requirement]
 
-Use this template for every page:
+Requirements:
+- Add JSDoc documentation to all new code
+- Follow existing code patterns
+- Update docs/task_tracker.md status when complete
+```
+
+### Adding a New Page
+
+> **Prompt template:**
+
+```
+Add a new [PageName] page following the PRD requirements:
+
+1. Create src/pages/[PageName].tsx with:
+   - @fileoverview JSDoc
+   - @seo JSDoc with keyword targets
+   - Head component with meta tags
+   - Component JSDoc
+
+2. Add DIRECT IMPORT to src/routes.tsx:
+```tsx
+import NewPage from '@/pages/NewPage';
+// In children array:
+{ path: 'new-page', element: <NewPage /> },
+```
+
+3. Update docs/task_tracker.md
+
+CRITICAL: Do NOT use React.lazy() — breaks pre-rendering.
+```
+
+### Completing a Feature
+
+After implementing all requirements from a PRD:
+
+```
+Review docs/PRD-[feature].md and verify all requirements are complete:
+- Check each FR-* requirement
+- Verify NFR-* requirements are met
+- Update docs/task_tracker.md with final status
+- Add completion note to task tracker change log
+```
+
+---
+
+## Code Patterns
+
+### JSDoc Standards
+
+Every exported function and component needs JSDoc:
 
 ```tsx
 /**
- * @fileoverview [Page Name] page component
- * @description [Brief description of page purpose]
- * @seo
- * - Primary keyword: [main keyword]
- * - Secondary keywords: [related terms]
+ * @fileoverview Brief description of the file
+ * @description More detailed explanation if needed
+ */
+
+/**
+ * Component/function description
+ * 
+ * @description What it does and why
+ * @param props - Component props
+ * @returns What it returns
+ * 
+ * @example
+ * <ComponentName prop="value" />
+ */
+```
+
+### SEO Page Template
+
+```tsx
+/**
+ * @fileoverview [Page] page component
+ * @seo Primary keyword: [keyword]
+ * @seo Secondary keywords: [terms]
  */
 import { Head } from "vite-react-ssg";
 
 /**
- * [Page Name] page
- * 
- * @description [What this page does and why it exists]
+ * [Page] page
  * 
  * @seo Title: "[Title]" (under 60 chars)
- * @seo Description: "[Description]" (under 160 chars)
- * @seo Canonical: https://yourdomain.com/page-path
- * 
- * @returns Page with SEO meta tags and content
+ * @seo Description: "[Desc]" (under 160 chars)
  */
 export default function PageName() {
   return (
     <>
       <Head>
-        <title>Page Title | Brand Name</title>
-        <meta name="description" content="150-160 character description with your main keyword" />
-        <link rel="canonical" href="https://yourdomain.com/page-path" />
+        <title>Page Title | Brand</title>
+        <meta name="description" content="Description with keyword" />
+        <link rel="canonical" href="https://domain.com/page" />
         
-        {/* Open Graph for social sharing */}
-        <meta property="og:title" content="Page Title | Brand Name" />
-        <meta property="og:description" content="Description for social sharing" />
-        <meta property="og:url" content="https://yourdomain.com/page-path" />
+        {/* Open Graph */}
+        <meta property="og:title" content="Page Title | Brand" />
+        <meta property="og:description" content="Description" />
+        <meta property="og:url" content="https://domain.com/page" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://yourdomain.com/og-image.jpg" />
         
-        {/* Twitter Card */}
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Page Title | Brand Name" />
-        <meta name="twitter:description" content="Description for Twitter" />
+        <meta name="twitter:title" content="Page Title | Brand" />
       </Head>
       
-      {/* Page content */}
       <section className="container py-16">
         <h1>Page Heading</h1>
       </section>
@@ -380,20 +504,7 @@ export default function PageName() {
 }
 ```
 
-IMPORTANT:
-- Use Head from vite-react-ssg (NOT react-helmet-async)
-- Every page needs unique title, description, and canonical URL
-- Include Open Graph tags for social sharing
-```
-
----
-
-## Phase 3: Responsive Header
-
-> **Copy this prompt into Lovable:**
-
-```
-Create a responsive Header component with JSDoc, scroll effects, and mobile menu.
+### Hydration-Safe Header
 
 ```tsx
 /**
@@ -401,57 +512,31 @@ Create a responsive Header component with JSDoc, scroll effects, and mobile menu
  * @description Fixed header with scroll-aware styling and mobile menu
  */
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import { ClientOnly } from '@/components/ClientOnly';
 
 /**
- * Navigation items configuration
- * @description Centralized nav links for consistency
- */
-const NAV_ITEMS = [
-  { path: '/about', label: 'About' },
-  { path: '/services', label: 'Services' },
-  { path: '/contact', label: 'Contact' },
-] as const;
-
-/**
  * Site header component
  * 
- * @description Features:
- * - Fixed positioning with backdrop blur on scroll
- * - Desktop horizontal navigation
- * - Mobile hamburger menu (uses portal, wrapped in ClientOnly)
- * 
- * @hydration
- * - Uses `mounted` state to prevent scroll style mismatch
- * - Mobile Sheet wrapped in ClientOnly with fallback button
- * 
- * @returns Header element with responsive navigation
+ * @hydration Uses mounted state for scroll styling
+ * @hydration Wraps Sheet in ClientOnly with fallback
  */
 export default function Header() {
-  /** Tracks if component has mounted in browser */
   const [mounted, setMounted] = useState(false);
-  /** Tracks scroll position for styling */
   const [isScrolled, setIsScrolled] = useState(false);
   
   useEffect(() => {
     setMounted(true);
-    
-    /**
-     * Updates scroll state based on window position
-     */
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial position
-    
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Only apply scroll styling after hydration to prevent mismatch
+  // Only apply scroll styling after hydration
   const headerClasses = mounted && isScrolled 
     ? "bg-background/95 backdrop-blur shadow-sm" 
     : "bg-transparent";
@@ -459,17 +544,13 @@ export default function Header() {
   return (
     <header className={`fixed top-0 w-full z-50 transition-all ${headerClasses}`}>
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="font-bold text-xl">
-          Logo
-        </Link>
+        <Link to="/" className="font-bold text-xl">Logo</Link>
         
-        {/* Desktop navigation */}
+        {/* Desktop nav */}
         <nav className="hidden md:flex gap-6">
-          {NAV_ITEMS.map(({ path, label }) => (
-            <Link key={path} to={path} className="hover:text-primary transition-colors">
-              {label}
-            </Link>
-          ))}
+          <Link to="/about">About</Link>
+          <Link to="/services">Services</Link>
+          <Link to="/contact">Contact</Link>
         </nav>
         
         {/* Mobile menu - wrapped for hydration safety */}
@@ -479,16 +560,13 @@ export default function Header() {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
-                  <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent>
                 <nav className="flex flex-col gap-4 mt-8">
-                  {NAV_ITEMS.map(({ path, label }) => (
-                    <Link key={path} to={path} className="text-lg">
-                      {label}
-                    </Link>
-                  ))}
+                  <Link to="/about">About</Link>
+                  <Link to="/services">Services</Link>
+                  <Link to="/contact">Contact</Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -498,117 +576,6 @@ export default function Header() {
     </header>
   );
 }
-```
-
-KEY PATTERNS:
-- Use `mounted` state before applying browser-dependent styles
-- Wrap Sheet (portal) in ClientOnly with fallback button
-- Centralize nav items in a const for consistency
-```
-
----
-
-## Phase 4: Adding Pages
-
-> **When adding any new page, use this prompt:**
-
-```
-Add a new [PageName] page with JSDoc documentation:
-
-1. Create src/pages/[PageName].tsx:
-   - Add @fileoverview JSDoc with page purpose
-   - Add @seo JSDoc with keyword targets
-   - Include Head component with meta tags
-   - Document the component with JSDoc
-
-2. Add DIRECT IMPORT to src/routes.tsx:
-```tsx
-// At top of routes.tsx with other imports
-import NewPage from '@/pages/NewPage';
-
-// In routes array children
-{ path: 'new-page', element: <NewPage /> },
-```
-
-CRITICAL: Do NOT use React.lazy() — it breaks pre-rendering.
-```
-
----
-
-## PRD-Driven Development
-
-After establishing your foundation, shift to PRD (Product Requirements Document) driven development for new features.
-
-### Creating a PRD
-
-> **Prompt to create a new PRD:**
-
-```
-Create a PRD document at docs/PRD-[feature-name].md for [feature description].
-
-Structure it with these sections:
-
-## Overview
-Brief description of the feature and its purpose.
-
-## Goals
-- Primary goal
-- Secondary goals
-- Success metrics
-
-## User Stories
-As a [user type], I want [feature] so that [benefit].
-
-## Requirements
-
-### Functional Requirements
-- [ ] FR-1: [Requirement]
-- [ ] FR-2: [Requirement]
-
-### Non-Functional Requirements
-- [ ] NFR-1: Performance target
-- [ ] NFR-2: Accessibility standard
-
-## Technical Approach
-Recommended implementation strategy.
-
-## Dependencies
-- External services needed
-- Environment variables required
-
-## Out of Scope
-Features explicitly NOT included in this phase.
-
-## Timeline
-Estimated phases and milestones.
-```
-
-### Using a PRD
-
-> **Prompt to implement from PRD:**
-
-```
-Implement the feature described in docs/PRD-[feature-name].md.
-
-Follow the requirements in order:
-1. Complete each FR-* requirement
-2. Ensure NFR-* requirements are met
-3. Add JSDoc to all new code
-4. Update the README if new setup is required
-```
-
-### PRD Index
-
-Keep track of all PRDs in your README:
-
-```markdown
-## Product Requirements
-
-| PRD | Status | Description |
-|-----|--------|-------------|
-| [PRD-contact-form](docs/PRD-contact-form.md) | ✅ Complete | Lead capture form |
-| [PRD-chat-widget](docs/PRD-chat-widget.md) | 🚧 In Progress | Live chat integration |
-| [PRD-analytics](docs/PRD-analytics.md) | 📋 Planned | Event tracking |
 ```
 
 ---
@@ -624,33 +591,19 @@ Keep track of all PRDs in your README:
 | Dropdown menus | ✅ Yes | Uses portal |
 | Scroll-based styling | Use `mounted` state | Browser API |
 | localStorage access | ✅ Yes | Browser API |
-| Date/time display | ✅ Yes | Varies by timezone |
-| Static text/images | ❌ No | Same on server/client |
-| Navigation links | ❌ No | Same on server/client |
+| Date/time display | ✅ Yes | Timezone varies |
+| Static content | ❌ No | Same on server/client |
 
-### Common Issues & Solutions
+### Common Issues
 
 | Problem | Cause | Solution |
 |---------|-------|----------|
-| Hydration error #418/#423 | Server/client HTML mismatch | Wrap in ClientOnly or use `mounted` state |
-| Page flickers on load | Portal rendering on server | Wrap in ClientOnly with fallback |
-| Meta tags not in HTML | Wrong Head import | Use `Head` from vite-react-ssg |
-| Admin pages indexed | Not excluded from SSG | Add to `includedRoutes` filter |
-| Blank page after build | React.lazy() used | Replace with direct imports |
+| Hydration error | Server/client mismatch | Wrap in ClientOnly or use mounted state |
+| Blank page after build | React.lazy() used | Use direct imports only |
+| Meta tags not in HTML | Wrong Head import | Use Head from vite-react-ssg |
+| Admin pages indexed | Not excluded from SSG | Add to includedRoutes filter |
 
-### File Overview
-
-| File | Purpose |
-|------|---------|
-| `src/main.tsx` | SSG entry point |
-| `src/routes.tsx` | Route definitions (direct imports only) |
-| `src/App.tsx` | Global providers |
-| `src/components/ClientOnly.tsx` | Browser-only wrapper |
-| `vite.config.ts` | Build settings + route exclusions |
-| `vercel.json` | Deployment configuration |
-| `docs/PRD-*.md` | Feature requirements documents |
-
-### Anti-Patterns to Avoid
+### Anti-Patterns
 
 ```tsx
 // ❌ DON'T: Use React.lazy for pages
@@ -658,12 +611,6 @@ const About = React.lazy(() => import('@/pages/About'));
 
 // ✅ DO: Direct imports
 import About from '@/pages/About';
-
-// ❌ DON'T: Create QueryClient outside components
-const queryClient = new QueryClient();
-
-// ✅ DO: Create inside component with useState
-const [queryClient] = useState(() => new QueryClient());
 
 // ❌ DON'T: Use portals without wrapping
 <Sheet>...</Sheet>
@@ -673,10 +620,10 @@ const [queryClient] = useState(() => new QueryClient());
   <Sheet>...</Sheet>
 </ClientOnly>
 
-// ❌ DON'T: Skip JSDoc on exported functions
+// ❌ DON'T: Skip JSDoc
 export function formatDate(date) { ... }
 
-// ✅ DO: Document with JSDoc
+// ✅ DO: Document everything
 /**
  * Formats a date for display
  * @param date - Date to format
@@ -685,9 +632,21 @@ export function formatDate(date) { ... }
 export function formatDate(date: Date): string { ... }
 ```
 
+### File Overview
+
+| File | Purpose |
+|------|---------|
+| `src/main.tsx` | SSG entry point |
+| `src/routes.tsx` | Route definitions (direct imports only) |
+| `src/components/ClientOnly.tsx` | Browser-only wrapper |
+| `vite.config.ts` | Build settings + route exclusions |
+| `vercel.json` | Deployment configuration |
+| `docs/PRD-*.md` | Feature requirements |
+| `docs/task_tracker.md` | Task tracking from PRD |
+
 ---
 
-## Testing Your Site
+## Testing
 
 ### Build Verification
 
@@ -705,18 +664,6 @@ Check `dist/index.html`:
 1. Go to https://search.google.com/test/rich-results
 2. Enter your page URL
 3. **Test each URL twice** — some issues only appear on second request
-4. Verify "Page is eligible for rich results"
-
----
-
-## Next Steps
-
-After completing this guide:
-
-1. **Create your first PRD** for a major feature
-2. **Add structured data** (LocalBusiness, FAQ schemas)
-3. **Set up analytics** tracking
-4. **Configure form endpoints** with Lovable Cloud
 
 ---
 
