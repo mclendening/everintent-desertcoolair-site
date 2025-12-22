@@ -60,8 +60,10 @@ export default function About() {
         <meta property="og:title" content="About Desert Cool Air | Phoenix HVAC Company Since 2010" />
         <meta property="og:description" content="Family-owned Phoenix HVAC company serving the Valley since 2010. NATE certified technicians, BBB accredited, ROC licensed." />
         <meta property="og:url" content="https://desertcoolair.com/about" />
+        <meta property="og:image" content="https://desertcoolair.com/images/hero-about-team.jpg" />
         <meta name="twitter:title" content="About Desert Cool Air | Phoenix HVAC Company Since 2010" />
         <meta name="twitter:description" content="Family-owned Phoenix HVAC company serving the Valley since 2010. NATE certified technicians, BBB accredited." />
+        <meta name="twitter:image" content="https://desertcoolair.com/images/hero-about-team.jpg" />
       </Head>
 
       {/* Hero Section */}

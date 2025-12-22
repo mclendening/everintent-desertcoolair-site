@@ -127,8 +127,10 @@ export default function Services() {
         <meta property="og:title" content="HVAC Services in Phoenix | AC Repair, Installation, Heating | Desert Cool Air" />
         <meta property="og:description" content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance, and indoor air quality." />
         <meta property="og:url" content="https://desertcoolair.com/services" />
+        <meta property="og:image" content="https://desertcoolair.com/images/hero-services-trucks.jpg" />
         <meta name="twitter:title" content="HVAC Services in Phoenix | AC Repair, Installation, Heating | Desert Cool Air" />
         <meta name="twitter:description" content="Complete HVAC services for Phoenix homes and businesses. AC repair, installation, heating, maintenance." />
+        <meta name="twitter:image" content="https://desertcoolair.com/images/hero-services-trucks.jpg" />
       </Head>
 
       {/* Hero Section */}

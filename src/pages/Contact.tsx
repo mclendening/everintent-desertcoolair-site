@@ -11,8 +11,10 @@ export default function Contact() {
         <meta property="og:title" content="Contact Desert Cool Air | Free HVAC Estimate Phoenix" />
         <meta property="og:description" content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix." />
         <meta property="og:url" content="https://desertcoolair.com/contact" />
+        <meta property="og:image" content="https://desertcoolair.com/images/hero-contact.jpg" />
         <meta name="twitter:title" content="Contact Desert Cool Air | Free HVAC Estimate Phoenix" />
         <meta name="twitter:description" content="Get a free HVAC estimate from Desert Cool Air. Contact us for AC repair, installation, and maintenance in Phoenix." />
+        <meta name="twitter:image" content="https://desertcoolair.com/images/hero-contact.jpg" />
       </Head>
 
       {/* Hero Section */}
