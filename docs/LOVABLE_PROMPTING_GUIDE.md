@@ -34,11 +34,11 @@ This guide provides copy-paste prompts with JSDoc documentation patterns. Follow
 
 Choose your backend approach before starting:
 
-| Option | Use When |
-|--------|----------|
-| **Vercel Edge API** | Simple forms, webhooks, API proxying |
+| Option                | Use When                                          |
+| --------------------- | ------------------------------------------------- |
+| **Vercel Edge API**   | Simple forms, webhooks, API proxying              |
 | **Supabase Edge API** | Database needed, complex auth, real-time features |
-| **No backend** | Static content only |
+| **No backend**        | Static content only                               |
 
 **Important:** This guide assumes Vercel Edge API. If using Supabase, enable Lovable Cloud in Phase 2.
 
@@ -52,7 +52,7 @@ Your first prompt creates the project. Keep it minimal—we'll build properly af
 
 ```
 Create a minimal React + TypeScript + Tailwind CSS project with:
-- A simple home page with placeholder content
+- A simple home page with no content
 - Basic project structure
 - No routing configuration yet
 
@@ -82,11 +82,11 @@ Your code now syncs automatically with every change.
 3. Import your new GitHub repository
 4. Configure settings:
 
-| Setting | Value |
-|---------|-------|
-| Build Command | `npx vite-react-ssg build` |
-| Output Directory | `dist` |
-| Framework Preset | `Other` |
+| Setting          | Value                      |
+| ---------------- | -------------------------- |
+| Build Command    | `npx vite-react-ssg build` |
+| Output Directory | `dist`                     |
+| Framework Preset | `Other`                    |
 
 5. Add environment variables (if needed)
 6. Deploy
@@ -113,6 +113,7 @@ If your project requires database or auth:
 3. Wait for Supabase provisioning
 
 **Out of scope for many projects:**
+
 - Admin routes
 - User login/authentication
 - Database management UI
@@ -226,7 +227,7 @@ Now build the project foundation with proper architecture.
 
 > **Prompt in Lovable:**
 
-```
+````
 Set up the project foundation with JSDoc documentation throughout. Update docs/task_tracker.md as you complete each item.
 
 Create these files:
@@ -246,9 +247,10 @@ import './index.css';
  * @remarks Replaces createRoot from react-dom for SSG builds
  */
 export const createRoot = ViteReactSSG({ routes });
-```
+````
 
 2. **src/components/ClientOnly.tsx** - Browser-only wrapper:
+
 ```tsx
 /**
  * @fileoverview Client-side only rendering wrapper
@@ -266,12 +268,12 @@ interface ClientOnlyProps {
 
 /**
  * Renders children only after client-side hydration
- * 
+ *
  * @description Use for components that:
  * - Access browser APIs (window, localStorage)
  * - Use portals (Sheet, Dialog, Toast)
  * - Display dynamic data (Date, Math.random)
- * 
+ *
  * @example
  * <ClientOnly fallback={<Button>Menu</Button>}>
  *   <Sheet>...</Sheet>
@@ -279,21 +281,22 @@ interface ClientOnlyProps {
  */
 export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   return mounted ? <>{children}</> : <>{fallback}</>;
 }
 ```
 
 3. **src/routes.tsx** - Route definitions:
+
 ```tsx
 /**
  * @fileoverview Application route definitions
  * @description All page routes for vite-react-ssg static generation
- * 
+ *
  * @important NEVER use React.lazy() — breaks pre-rendering
  * @important All page imports must be direct/static imports
  */
@@ -322,6 +325,7 @@ export const routes: RouteRecord[] = [
 ```
 
 4. **vite.config.ts** - Build configuration with route exclusions:
+
 ```ts
 /**
  * @fileoverview Vite configuration with SSG options
@@ -356,8 +360,8 @@ export default defineConfig(({ mode }) => ({
      * @description ALWAYS exclude admin, dashboard, and auth routes
      */
     includedRoutes: (paths: string[]) => {
-      return paths.filter((path: string) => 
-        !path.includes('admin') && 
+      return paths.filter((path: string) =>
+        !path.includes('admin') &&
         !path.includes('dashboard') &&
         !path.includes('auth')
       );
@@ -367,6 +371,7 @@ export default defineConfig(({ mode }) => ({
 ```
 
 5. **vercel.json** - Deployment settings:
+
 ```json
 {
   "buildCommand": "npx vite-react-ssg build",
@@ -376,6 +381,7 @@ export default defineConfig(({ mode }) => ({
   "trailingSlash": false
 }
 ```
+
 ```
 
 ---
@@ -389,13 +395,16 @@ All feature development follows this pattern:
 > **Prompt template:**
 
 ```
+
 Implement [FR-X] from docs/PRD-[feature].md:
 [Paste the specific requirement]
 
 Requirements:
+
 - Add JSDoc documentation to all new code
 - Follow existing code patterns
 - Update docs/task_tracker.md status when complete
+
 ```
 
 ### Adding a New Page
@@ -403,6 +412,7 @@ Requirements:
 > **Prompt template:**
 
 ```
+
 Add a new [PageName] page following the PRD requirements:
 
 1. Create src/pages/[PageName].tsx with:
@@ -412,6 +422,7 @@ Add a new [PageName] page following the PRD requirements:
    - Component JSDoc
 
 2. Add DIRECT IMPORT to src/routes.tsx:
+
 ```tsx
 import NewPage from '@/pages/NewPage';
 // In children array:
@@ -421,6 +432,7 @@ import NewPage from '@/pages/NewPage';
 3. Update docs/task_tracker.md
 
 CRITICAL: Do NOT use React.lazy() — breaks pre-rendering.
+
 ```
 
 ### Completing a Feature
@@ -428,12 +440,15 @@ CRITICAL: Do NOT use React.lazy() — breaks pre-rendering.
 After implementing all requirements from a PRD:
 
 ```
+
 Review docs/PRD-[feature].md and verify all requirements are complete:
-- Check each FR-* requirement
-- Verify NFR-* requirements are met
+
+- Check each FR-\* requirement
+- Verify NFR-\* requirements are met
 - Update docs/task_tracker.md with final status
 - Add completion note to task tracker change log
-```
+
+````
 
 ---
 
@@ -451,15 +466,15 @@ Every exported function and component needs JSDoc:
 
 /**
  * Component/function description
- * 
+ *
  * @description What it does and why
  * @param props - Component props
  * @returns What it returns
- * 
+ *
  * @example
  * <ComponentName prop="value" />
  */
-```
+````
 
 ### SEO Page Template
 
@@ -473,7 +488,7 @@ import { Head } from "vite-react-ssg";
 
 /**
  * [Page] page
- * 
+ *
  * @seo Title: "[Title]" (under 60 chars)
  * @seo Description: "[Desc]" (under 160 chars)
  */
@@ -484,18 +499,18 @@ export default function PageName() {
         <title>Page Title | Brand</title>
         <meta name="description" content="Description with keyword" />
         <link rel="canonical" href="https://domain.com/page" />
-        
+
         {/* Open Graph */}
         <meta property="og:title" content="Page Title | Brand" />
         <meta property="og:description" content="Description" />
         <meta property="og:url" content="https://domain.com/page" />
         <meta property="og:type" content="website" />
-        
+
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Page Title | Brand" />
       </Head>
-      
+
       <section className="container py-16">
         <h1>Page Heading</h1>
       </section>
@@ -520,14 +535,14 @@ import { ClientOnly } from '@/components/ClientOnly';
 
 /**
  * Site header component
- * 
+ *
  * @hydration Uses mounted state for scroll styling
  * @hydration Wraps Sheet in ClientOnly with fallback
  */
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -535,24 +550,24 @@ export default function Header() {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   // Only apply scroll styling after hydration
-  const headerClasses = mounted && isScrolled 
-    ? "bg-background/95 backdrop-blur shadow-sm" 
+  const headerClasses = mounted && isScrolled
+    ? "bg-background/95 backdrop-blur shadow-sm"
     : "bg-transparent";
-  
+
   return (
     <header className={`fixed top-0 w-full z-50 transition-all ${headerClasses}`}>
       <div className="container flex items-center justify-between h-16">
         <Link to="/" className="font-bold text-xl">Logo</Link>
-        
+
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-6">
           <Link to="/about">About</Link>
           <Link to="/services">Services</Link>
           <Link to="/contact">Contact</Link>
         </nav>
-        
+
         {/* Mobile menu - wrapped for hydration safety */}
         <div className="md:hidden">
           <ClientOnly fallback={<Button variant="ghost" size="icon"><Menu /></Button>}>
@@ -584,24 +599,24 @@ export default function Header() {
 
 ### When to Use ClientOnly
 
-| Feature | Needs ClientOnly? | Why |
-|---------|-------------------|-----|
-| Sheet, Dialog, Drawer | ✅ Yes | Uses portal |
-| Toast notifications | ✅ Yes | Uses portal |
-| Dropdown menus | ✅ Yes | Uses portal |
-| Scroll-based styling | Use `mounted` state | Browser API |
-| localStorage access | ✅ Yes | Browser API |
-| Date/time display | ✅ Yes | Timezone varies |
-| Static content | ❌ No | Same on server/client |
+| Feature               | Needs ClientOnly?   | Why                   |
+| --------------------- | ------------------- | --------------------- |
+| Sheet, Dialog, Drawer | ✅ Yes              | Uses portal           |
+| Toast notifications   | ✅ Yes              | Uses portal           |
+| Dropdown menus        | ✅ Yes              | Uses portal           |
+| Scroll-based styling  | Use `mounted` state | Browser API           |
+| localStorage access   | ✅ Yes              | Browser API           |
+| Date/time display     | ✅ Yes              | Timezone varies       |
+| Static content        | ❌ No               | Same on server/client |
 
 ### Common Issues
 
-| Problem | Cause | Solution |
-|---------|-------|----------|
-| Hydration error | Server/client mismatch | Wrap in ClientOnly or use mounted state |
-| Blank page after build | React.lazy() used | Use direct imports only |
-| Meta tags not in HTML | Wrong Head import | Use Head from vite-react-ssg |
-| Admin pages indexed | Not excluded from SSG | Add to includedRoutes filter |
+| Problem                | Cause                  | Solution                                |
+| ---------------------- | ---------------------- | --------------------------------------- |
+| Hydration error        | Server/client mismatch | Wrap in ClientOnly or use mounted state |
+| Blank page after build | React.lazy() used      | Use direct imports only                 |
+| Meta tags not in HTML  | Wrong Head import      | Use Head from vite-react-ssg            |
+| Admin pages indexed    | Not excluded from SSG  | Add to includedRoutes filter            |
 
 ### Anti-Patterns
 
@@ -634,15 +649,15 @@ export function formatDate(date: Date): string { ... }
 
 ### File Overview
 
-| File | Purpose |
-|------|---------|
-| `src/main.tsx` | SSG entry point |
-| `src/routes.tsx` | Route definitions (direct imports only) |
-| `src/components/ClientOnly.tsx` | Browser-only wrapper |
-| `vite.config.ts` | Build settings + route exclusions |
-| `vercel.json` | Deployment configuration |
-| `docs/PRD-*.md` | Feature requirements |
-| `docs/task_tracker.md` | Task tracking from PRD |
+| File                            | Purpose                                 |
+| ------------------------------- | --------------------------------------- |
+| `src/main.tsx`                  | SSG entry point                         |
+| `src/routes.tsx`                | Route definitions (direct imports only) |
+| `src/components/ClientOnly.tsx` | Browser-only wrapper                    |
+| `vite.config.ts`                | Build settings + route exclusions       |
+| `vercel.json`                   | Deployment configuration                |
+| `docs/PRD-*.md`                 | Feature requirements                    |
+| `docs/task_tracker.md`          | Task tracking from PRD                  |
 
 ---
 
@@ -655,6 +670,7 @@ npx vite-react-ssg build
 ```
 
 Check `dist/index.html`:
+
 - ✅ Full page content visible (not empty div)
 - ✅ Meta tags in `<head>` section
 - ✅ Text content pre-rendered
@@ -667,4 +683,4 @@ Check `dist/index.html`:
 
 ---
 
-*This guide establishes patterns for maintainable, SEO-optimized Lovable projects.*
+_This guide establishes patterns for maintainable, SEO-optimized Lovable projects._
