@@ -1,7 +1,12 @@
 import type { RouteRecord } from 'vite-react-ssg';
-import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { AppProviders } from '@/App';
+
+// Direct imports for SSG - React.lazy() causes inconsistent pre-rendering
+import Home from '@/pages/Home';
+import Services from '@/pages/Services';
+import About from '@/pages/About';
+import Contact from '@/pages/Contact';
 
 // Wrap Layout with providers
 const LayoutWithProviders = () => (
@@ -17,23 +22,19 @@ export const routes: RouteRecord[] = [
     children: [
       { 
         index: true, 
-        Component: React.lazy(() => import('@/pages/Home')),
-        entry: 'src/pages/Home.tsx',
+        element: <Home />,
       },
       { 
         path: 'services', 
-        Component: React.lazy(() => import('@/pages/Services')),
-        entry: 'src/pages/Services.tsx',
+        element: <Services />,
       },
       { 
         path: 'about', 
-        Component: React.lazy(() => import('@/pages/About')),
-        entry: 'src/pages/About.tsx',
+        element: <About />,
       },
       { 
         path: 'contact', 
-        Component: React.lazy(() => import('@/pages/Contact')),
-        entry: 'src/pages/Contact.tsx',
+        element: <Contact />,
       },
     ],
   },
