@@ -16,8 +16,10 @@ export default function Home() {
         <meta property="og:title" content="Phoenix HVAC Services | AC Repair & Installation | Desert Cool Air" />
         <meta property="og:description" content="Phoenix's trusted HVAC experts. 24/7 emergency AC repair, installation, and maintenance. Same-day service. Free estimates." />
         <meta property="og:url" content="https://desertcoolair.com" />
+        <meta property="og:image" content="https://desertcoolair.com/images/hero-desert.jpg" />
         <meta name="twitter:title" content="Phoenix HVAC Services | AC Repair & Installation | Desert Cool Air" />
         <meta name="twitter:description" content="Phoenix's trusted HVAC experts. 24/7 emergency AC repair, installation, and maintenance." />
+        <meta name="twitter:image" content="https://desertcoolair.com/images/hero-desert.jpg" />
       </Head>
 
       <Hero />
