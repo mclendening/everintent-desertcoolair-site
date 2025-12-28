@@ -32,6 +32,39 @@ Before starting Prompt 2, complete these steps:
 
 ---
 
+## Vercel Configuration (vercel.json)
+
+**Critical:** This exact configuration is required for SSG to work properly.
+
+```json
+{
+  "buildCommand": "npx vite-react-ssg build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false
+}
+```
+
+### Configuration Explained:
+
+| Property | Value | Why It Matters |
+|----------|-------|----------------|
+| `buildCommand` | `npx vite-react-ssg build` | Uses SSG plugin instead of standard Vite build — pre-renders all routes to static HTML |
+| `outputDirectory` | `dist` | Where SSG outputs pre-rendered HTML files |
+| `framework` | `vite` | Tells Vercel to use Vite optimizations (not Next.js, etc.) |
+| `cleanUrls` | `true` | Enables `/services` instead of `/services.html` — critical for SEO |
+| `trailingSlash` | `false` | Prevents duplicate content issues (`/services` vs `/services/`) |
+
+### Common Mistakes to Avoid:
+
+1. **Missing buildCommand** — If you use default Vite build, pages won't be pre-rendered
+2. **Wrong framework** — Setting to "nextjs" or others breaks the build
+3. **trailingSlash: true** — Creates duplicate URLs, hurts SEO
+4. **Forgetting cleanUrls** — Results in ugly `.html` extensions in URLs
+
+---
+
 ## Phase 1: Bootstrap Prompt
 
 **When to use:** First prompt on a brand new Lovable project.
