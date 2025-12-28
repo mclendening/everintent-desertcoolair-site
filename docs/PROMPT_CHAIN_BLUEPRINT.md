@@ -20,48 +20,46 @@ This document provides the exact prompts to build a production-ready lead genera
 
 ## Prerequisites Checklist
 
-Before starting Prompt 2, complete these steps:
-
+### Before Phase 1 (Bootstrap):
 - [ ] GitHub repository connected to Lovable
-- [ ] Vercel Pro connected with custom domain configured
+
+### Before Phase 2 (Architecture & Integration):
+- [ ] Vercel Pro connected to GitHub repo
+- [ ] Custom domain configured in Vercel
 - [ ] PRD document uploaded to `docs/PRD-[project-name].md`
-- [ ] Vercel environment variables configured:
-  - `GHL_FORM_WEBHOOK` — GoHighLevel webhook URL
-  - `GHL_LOCATION_ID` — GHL sub-account/location ID  
-  - `GHL_WIDGET_ID` — GHL chat widget ID (if using chatbot)
+- [ ] Vercel environment variables configured (see below)
 
 ---
 
-## Vercel Configuration (vercel.json)
+## Environment Variables — CRITICAL DISTINCTION
 
-**Critical:** This exact configuration is required for SSG to work properly.
+### Where Variables Go:
 
-```json
-{
-  "buildCommand": "npx vite-react-ssg build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "cleanUrls": true,
-  "trailingSlash": false
-}
-```
+| Variable Type | Where to Store | Accessible To | Example |
+|---------------|----------------|---------------|---------|
+| **Public keys** | In code (`.env` with `VITE_` prefix) | Frontend + Backend | `VITE_GA_ID`, `VITE_SITE_URL` |
+| **Private secrets** | Vercel Project Settings → Environment Variables | Backend (Edge Functions) only | `GHL_FORM_WEBHOOK`, `GHL_LOCATION_ID` |
 
-### Configuration Explained:
+### Required Vercel Environment Variables (Private):
 
-| Property | Value | Why It Matters |
-|----------|-------|----------------|
-| `buildCommand` | `npx vite-react-ssg build` | Uses SSG plugin instead of standard Vite build — pre-renders all routes to static HTML |
-| `outputDirectory` | `dist` | Where SSG outputs pre-rendered HTML files |
-| `framework` | `vite` | Tells Vercel to use Vite optimizations (not Next.js, etc.) |
-| `cleanUrls` | `true` | Enables `/services` instead of `/services.html` — critical for SEO |
-| `trailingSlash` | `false` | Prevents duplicate content issues (`/services` vs `/services/`) |
+Set these in **Vercel Dashboard → Project Settings → Environment Variables**:
 
-### Common Mistakes to Avoid:
+| Variable | Description | Where Used |
+|----------|-------------|------------|
+| `GHL_FORM_WEBHOOK` | GoHighLevel webhook URL | `api/submit-form.ts` |
+| `GHL_LOCATION_ID` | GHL sub-account/location ID | `api/submit-form.ts` |
+| `GHL_WIDGET_ID` | GHL chat widget ID (if using chatbot) | `api/submit-form.ts` |
 
-1. **Missing buildCommand** — If you use default Vite build, pages won't be pre-rendered
-2. **Wrong framework** — Setting to "nextjs" or others breaks the build
-3. **trailingSlash: true** — Creates duplicate URLs, hurts SEO
-4. **Forgetting cleanUrls** — Results in ugly `.html` extensions in URLs
+### ⚠️ NEVER Put in Code:
+- API keys that grant write/admin access
+- Webhook URLs
+- Database credentials
+- Any secret that could be abused if exposed
+
+### ✅ OK to Put in Code (with VITE_ prefix):
+- Google Analytics ID
+- Public API keys (read-only, rate-limited)
+- Site URL constants
 
 ---
 
@@ -189,6 +187,27 @@ Build this foundation now. We will add the PRD-specific features in the next pro
 I have uploaded the PRD to docs/PRD-[project-name].md. Read it completely.
 
 Implement the full site architecture based on the PRD with these critical constraints:
+
+## 0. Vercel Configuration (vercel.json)
+
+Create vercel.json in project root with this EXACT configuration:
+
+```json
+{
+  "buildCommand": "npx vite-react-ssg build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false
+}
+```
+
+Why each property matters:
+- `buildCommand`: Uses SSG plugin to pre-render all routes to static HTML
+- `outputDirectory`: Where SSG outputs the pre-rendered files
+- `framework`: Tells Vercel to use Vite optimizations
+- `cleanUrls`: Enables `/services` instead of `/services.html` (critical for SEO)
+- `trailingSlash`: false prevents duplicate URLs hurting SEO
 
 ## 1. Vercel Edge Function for GHL (api/submit-form.ts)
 
