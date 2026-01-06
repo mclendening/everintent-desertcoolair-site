@@ -618,23 +618,107 @@ export default function Header() {
 | Meta tags not in HTML  | Wrong Head import      | Use Head from vite-react-ssg            |
 | Admin pages indexed    | Not excluded from SSG  | Add to includedRoutes filter            |
 
-### Anti-Patterns
+### SSG Hard Rules — CRITICAL
+
+These rules MUST be followed or the SSG build will fail or produce empty HTML:
+
+#### 1. No Browser APIs at Module/Component Top Level
 
 ```tsx
-// ❌ DON'T: Use React.lazy for pages
+// ❌ CRASHES SSG BUILD — window doesn't exist on server
+const width = window.innerWidth;
+const stored = localStorage.getItem('key');
+const now = new Date().toLocaleString();
+
+// ✅ DO: Access only inside useEffect
+const [width, setWidth] = useState(0);
+useEffect(() => {
+  setWidth(window.innerWidth);
+}, []);
+
+// ✅ OR: Use ClientOnly wrapper
+<ClientOnly>
+  <ComponentThatUsesWindow />
+</ClientOnly>
+
+// ✅ OR: Guard with typeof check
+const isBrowser = typeof window !== 'undefined';
+if (isBrowser) {
+  // safe to use window here
+}
+```
+
+#### 2. No React.lazy() for Pages
+
+```tsx
+// ❌ BREAKS PRE-RENDERING — pages render blank
 const About = React.lazy(() => import('@/pages/About'));
 
-// ✅ DO: Direct imports
+// ✅ DO: Direct static imports only
 import About from '@/pages/About';
+```
 
-// ❌ DON'T: Use portals without wrapping
+#### 3. No useLayoutEffect
+
+```tsx
+// ❌ CAUSES SSR WARNINGS — runs before paint, no server equivalent
+useLayoutEffect(() => {
+  // some DOM measurement
+}, []);
+
+// ✅ DO: Use useEffect instead
+useEffect(() => {
+  // same logic works for SSG
+}, []);
+```
+
+#### 4. No Dynamic Values in Initial Render
+
+```tsx
+// ❌ HYDRATION MISMATCH — server/client values differ
+<span>{new Date().toLocaleString()}</span>
+<span>{Math.random()}</span>
+
+// ✅ DO: Render after mount
+const [time, setTime] = useState<string | null>(null);
+useEffect(() => {
+  setTime(new Date().toLocaleString());
+}, []);
+return <span>{time ?? 'Loading...'}</span>;
+```
+
+#### 5. Portals Must Be Wrapped
+
+```tsx
+// ❌ HYDRATION ERROR — portal doesn't exist on server
 <Sheet>...</Sheet>
+<Dialog>...</Dialog>
+<Toast />
 
-// ✅ DO: Wrap portals in ClientOnly
+// ✅ DO: Wrap in ClientOnly with fallback
 <ClientOnly fallback={<Button>Menu</Button>}>
   <Sheet>...</Sheet>
 </ClientOnly>
+```
 
+#### 6. Dynamic Routes Must Be Excluded
+
+```tsx
+// In vite.config.ts ssgOptions.includedRoutes:
+// ❌ DON'T: Try to pre-render dynamic routes
+// /user/:id, /product/:slug — these need runtime data
+
+// ✅ DO: Filter them out
+includedRoutes: (paths) => paths.filter(p => 
+  !p.includes(':') &&           // No dynamic params
+  !p.includes('admin') &&
+  !p.includes('dashboard')
+);
+```
+
+### Anti-Patterns
+
+```tsx
 // ❌ DON'T: Skip JSDoc
 export function formatDate(date) { ... }
 
