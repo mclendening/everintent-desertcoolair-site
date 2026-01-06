@@ -1,0 +1,209 @@
+/**
+ * LocalBusiness JSON-LD Schema for Google Business Place Results
+ * Implements Schema.org HVACBusiness type for local SEO
+ * @see https://schema.org/HVACBusiness
+ */
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  "@id": "https://desertcoolair.com/#organization",
+  
+  // Business Identity
+  name: "Desert Cool Air",
+  alternateName: "Desert Cool Air HVAC",
+  description: "Phoenix's trusted HVAC experts providing 24/7 emergency AC repair, installation, and maintenance services. Family-owned since 2010.",
+  url: "https://desertcoolair.com",
+  logo: "https://desertcoolair.com/favicon.png",
+  image: "https://desertcoolair.com/images/hero-desert.jpg",
+  
+  // Contact Information
+  telephone: "+1-602-609-2300",
+  email: "info@desertcoolair.com",
+  
+  // Address - Phoenix Metro Service Area
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Phoenix",
+    addressRegion: "AZ",
+    addressCountry: "US",
+    postalCode: "85001",
+  },
+  
+  // Geographic Service Area
+  areaServed: [
+    { "@type": "City", name: "Phoenix", "@id": "https://www.wikidata.org/wiki/Q16556" },
+    { "@type": "City", name: "Scottsdale" },
+    { "@type": "City", name: "Mesa" },
+    { "@type": "City", name: "Tempe" },
+    { "@type": "City", name: "Chandler" },
+    { "@type": "City", name: "Gilbert" },
+    { "@type": "City", name: "Glendale" },
+    { "@type": "City", name: "Peoria" },
+    { "@type": "City", name: "Surprise" },
+    { "@type": "City", name: "Avondale" },
+    { "@type": "City", name: "Goodyear" },
+    { "@type": "City", name: "Buckeye" },
+  ],
+  
+  // Geographic Coordinates - Phoenix Metro Center
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 33.4484,
+    longitude: -112.074,
+  },
+  
+  // Business Hours - 24/7 Emergency Available
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "07:00",
+      closes: "18:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Saturday"],
+      opens: "08:00",
+      closes: "14:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "00:00",
+      closes: "23:59",
+      description: "24/7 Emergency Service Available",
+    },
+  ],
+  
+  // Business Attributes
+  priceRange: "$$",
+  paymentAccepted: ["Cash", "Credit Card", "Check", "Financing Available"],
+  currenciesAccepted: "USD",
+  
+  // Founding Information
+  foundingDate: "2010",
+  foundingLocation: {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Phoenix",
+      addressRegion: "AZ",
+    },
+  },
+  
+  // Services Offered
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "HVAC Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "AC Repair",
+          description: "Same-day air conditioning repair service for all makes and models",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "AC Installation",
+          description: "Professional air conditioning installation with free estimates",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Heating Services",
+          description: "Furnace and heat pump repair, maintenance, and installation",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "HVAC Maintenance",
+          description: "Preventive maintenance plans to extend system life",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "24/7 Emergency HVAC Service",
+          description: "Round-the-clock emergency heating and cooling repair",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Indoor Air Quality",
+          description: "Air purification, filtration, and humidity control solutions",
+        },
+      },
+    ],
+  },
+  
+  // Certifications & Credentials
+  hasCredential: [
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "NATE Certified Technicians" },
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "EPA 608 Universal Certified" },
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "Arizona ROC Licensed" },
+  ],
+  
+  // Brand Affiliations
+  brand: [
+    { "@type": "Brand", name: "Trane" },
+    { "@type": "Brand", name: "Carrier" },
+    { "@type": "Brand", name: "Lennox" },
+  ],
+  
+  // Aggregate Rating (placeholder - update with real reviews)
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "247",
+    bestRating: "5",
+    worstRating: "1",
+  },
+  
+  // Social Media Links
+  sameAs: [
+    "https://www.facebook.com/desertcoolair",
+    "https://www.instagram.com/desertcoolair",
+  ],
+  
+  // Parent Organization Disclosure
+  parentOrganization: {
+    "@type": "Organization",
+    name: "EverIntent LLC",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "2892 N Bellflower Blvd PMB 1018",
+      addressLocality: "Long Beach",
+      addressRegion: "CA",
+      postalCode: "90815",
+      addressCountry: "US",
+    },
+    telephone: "+1-562-685-9500",
+  },
+};
+
+/**
+ * Component that renders LocalBusiness JSON-LD schema
+ * Should be included in the <Head> of all pages
+ */
+export function LocalBusinessSchema() {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+    />
+  );
+}
+
+export default LocalBusinessSchema;

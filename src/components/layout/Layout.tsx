@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
+import { Head } from "vite-react-ssg";
 import Header from "./Header";
 import Footer from "./Footer";
+import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -11,14 +13,21 @@ const PageLoader = () => (
 
 export default function Layout() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1">
-        <Suspense fallback={<PageLoader />}>
-          <Outlet />
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
+    <>
+      {/* Global SEO Schema for Google Business Place Results */}
+      <Head>
+        <LocalBusinessSchema />
+      </Head>
+      
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1">
+          <Suspense fallback={<PageLoader />}>
+            <Outlet />
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
