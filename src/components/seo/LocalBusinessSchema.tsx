@@ -2,14 +2,15 @@
  * LocalBusiness JSON-LD Schema for Google Business Place Results
  * Implements Schema.org HVACBusiness type for local SEO
  * @see https://schema.org/HVACBusiness
+ * 
+ * SSG PATTERN: Export stringified schema for use in Head tags
  */
 
-const localBusinessSchema = {
+export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "HVACBusiness",
   "@id": "https://desertcoolair.com/#organization",
   
-  // Business Identity
   name: "Desert Cool Air",
   alternateName: "Desert Cool Air HVAC",
   description: "Phoenix's trusted HVAC experts providing 24/7 emergency AC repair, installation, and maintenance services. Family-owned since 2010.",
@@ -17,11 +18,9 @@ const localBusinessSchema = {
   logo: "https://desertcoolair.com/favicon.png",
   image: "https://desertcoolair.com/images/hero-desert.jpg",
   
-  // Contact Information
   telephone: "+1-602-609-2300",
   email: "info@desertcoolair.com",
   
-  // Address - Phoenix Metro Service Area
   address: {
     "@type": "PostalAddress",
     addressLocality: "Phoenix",
@@ -30,7 +29,6 @@ const localBusinessSchema = {
     postalCode: "85001",
   },
   
-  // Geographic Service Area
   areaServed: [
     { "@type": "City", name: "Phoenix", "@id": "https://www.wikidata.org/wiki/Q16556" },
     { "@type": "City", name: "Scottsdale" },
@@ -46,14 +44,12 @@ const localBusinessSchema = {
     { "@type": "City", name: "Buckeye" },
   ],
   
-  // Geographic Coordinates - Phoenix Metro Center
   geo: {
     "@type": "GeoCoordinates",
     latitude: 33.4484,
     longitude: -112.074,
   },
   
-  // Business Hours - 24/7 Emergency Available
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -76,12 +72,10 @@ const localBusinessSchema = {
     },
   ],
   
-  // Business Attributes
   priceRange: "$$",
   paymentAccepted: ["Cash", "Credit Card", "Check", "Financing Available"],
   currenciesAccepted: "USD",
   
-  // Founding Information
   foundingDate: "2010",
   foundingLocation: {
     "@type": "Place",
@@ -92,7 +86,6 @@ const localBusinessSchema = {
     },
   },
   
-  // Services Offered
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "HVAC Services",
@@ -148,21 +141,18 @@ const localBusinessSchema = {
     ],
   },
   
-  // Certifications & Credentials
   hasCredential: [
     { "@type": "EducationalOccupationalCredential", credentialCategory: "NATE Certified Technicians" },
     { "@type": "EducationalOccupationalCredential", credentialCategory: "EPA 608 Universal Certified" },
     { "@type": "EducationalOccupationalCredential", credentialCategory: "Arizona ROC Licensed" },
   ],
   
-  // Brand Affiliations
   brand: [
     { "@type": "Brand", name: "Trane" },
     { "@type": "Brand", name: "Carrier" },
     { "@type": "Brand", name: "Lennox" },
   ],
   
-  // Aggregate Rating (placeholder - update with real reviews)
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "4.9",
@@ -171,13 +161,11 @@ const localBusinessSchema = {
     worstRating: "1",
   },
   
-  // Social Media Links
   sameAs: [
     "https://www.facebook.com/desertcoolair",
     "https://www.instagram.com/desertcoolair",
   ],
   
-  // Parent Organization Disclosure
   parentOrganization: {
     "@type": "Organization",
     name: "EverIntent LLC",
@@ -193,17 +181,5 @@ const localBusinessSchema = {
   },
 };
 
-/**
- * Component that renders LocalBusiness JSON-LD schema
- * Should be included in the <Head> of all pages
- */
-export function LocalBusinessSchema() {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-    />
-  );
-}
-
-export default LocalBusinessSchema;
+/** Pre-stringified for SSG Head injection */
+export const localBusinessSchemaString = JSON.stringify(localBusinessSchema);
